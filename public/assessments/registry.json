@@ -13,7 +13,7 @@
       "questionCount": 12,
       "difficulty": "easy",
       "tags": ["人格", "性格", "MBTI", "职业", "自我探索"],
-      "filePath": "/assessments/personality/mbti-basic.json",
+      "filePath": "assessments/personality/mbti-basic.json",
       "version": "1.0.0",
       "status": "active"
     },
@@ -28,7 +28,7 @@
       "questionCount": 12,
       "difficulty": "easy",
       "tags": ["压力", "心理健康", "情绪", "压力管理"],
-      "filePath": "/assessments/psychology/stress-check.json",
+      "filePath": "assessments/psychology/stress-check.json",
       "version": "1.0.0",
       "status": "active"
     },
@@ -43,7 +43,7 @@
       "questionCount": 10,
       "difficulty": "medium",
       "tags": ["逻辑", "推理", "认知", "思维", "智力"],
-      "filePath": "/assessments/cognition/logic-lite.json",
+      "filePath": "assessments/cognition/logic-lite.json",
       "version": "1.0.0",
       "status": "active"
     },
@@ -58,7 +58,7 @@
       "questionCount": 12,
       "difficulty": "easy",
       "tags": ["价值观", "人生观", "信念", "自我认知"],
-      "filePath": "/assessments/ideology/values-spectrum.json",
+      "filePath": "assessments/ideology/values-spectrum.json",
       "version": "1.0.0",
       "status": "active"
     },
@@ -73,7 +73,7 @@
       "questionCount": 18,
       "difficulty": "medium",
       "tags": ["职业", "兴趣", "霍兰德", "生涯规划", "职业发展"],
-      "filePath": "/assessments/career/holland-basic.json",
+      "filePath": "assessments/career/holland-basic.json",
       "version": "1.0.0",
       "status": "active"
     }

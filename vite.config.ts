@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: process.env.VITE_BASE_URL || '/humanity/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

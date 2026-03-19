@@ -4,7 +4,7 @@ import type {
   AssessmentCategory,
 } from '@/shared/types';
 
-const REGISTRY_PATH = '/assessments/registry.json';
+const REGISTRY_PATH = 'assessments/registry.json';
 
 interface RegistryData {
   version: string;
@@ -14,13 +14,26 @@ interface RegistryData {
 
 let cachedRegistry: RegistryData | null = null;
 
+function getBasePath(): string {
+  return import.meta.env.BASE_URL.replace(/\/$/, '');
+}
+
+function resolvePath(path: string): string {
+  const base = getBasePath();
+  if (base) {
+    return `/${base}/${path}`.replace(/\/+/g, '/');
+  }
+  return `/${path}`.replace(/\/+/g, '/');
+}
+
 export async function fetchAssessmentRegistry(): Promise<RegistryData> {
   if (cachedRegistry) {
     return cachedRegistry;
   }
 
   try {
-    const response = await fetch(REGISTRY_PATH);
+    const registryPath = resolvePath(REGISTRY_PATH);
+    const response = await fetch(registryPath);
     if (!response.ok) {
       throw new Error(`Failed to fetch registry: ${response.status}`);
     }
@@ -56,7 +69,9 @@ export async function fetchAssessmentDefinition(
   filePath: string
 ): Promise<AssessmentDefinition> {
   try {
-    const response = await fetch(filePath);
+    const cleanPath = filePath.replace(/^\//, '');
+    const resolvedPath = resolvePath(cleanPath);
+    const response = await fetch(resolvedPath);
     if (!response.ok) {
       throw new Error(`Failed to fetch assessment: ${response.status}`);
     }
