@@ -232,7 +232,7 @@ HumanOS/
 | 数据类型 | 存储方式 | Key 模式 |
 |----------|----------|----------|
 | 答题结果 | localStorage | `quiz_result_{assessmentId}` |
-| 用户设置 | Zustand + localStorage | `humanity_settings` |
+| 用户设置 | Zustand + localStorage | `humanOS_settings` |
 | 答题草稿 | localStorage | `quiz_draft_{assessmentId}` |
 
 ### 数据流程
@@ -279,7 +279,7 @@ HumanOS/
 
 ### 关键实现细节
 
-- **HashRouter**: 必需，用于 GitHub Pages 子目录部署（`/humanity/`）
+- **HashRouter**: 必需，用于 GitHub Pages 子目录部署（`/HumanOS/`）
 - **动态加载**: 题库通过 fetch 在运行时动态加载
 - **类型安全**: 完整的 TypeScript 类型覆盖
 - **响应式**: Tailwind CSS 移动优先方案
@@ -345,8 +345,8 @@ fetchAssessmentBySlug(slug)
 
 ```bash
 # 克隆仓库
-git clone https://github.com/badhope/humanity.git
-cd humanity
+git clone https://github.com/badhope/HumanOS.git
+cd HumanOS
 
 # 安装依赖
 npm install
@@ -385,9 +385,9 @@ npm run build
 1. 推送代码到 `main` 分支
 2. GitHub Actions 自动触发：
    - 运行 `npm run build`
-   - 部署到 `https://badhope.github.io/humanity/`
+   - 部署到 `https://badhope.github.io/HumanOS/`
 
-**注意**：项目使用 HashRouter，所有路由在 `/humanity/` 子目录下正常工作。
+**注意**：项目使用 HashRouter，所有路由在 `/HumanOS/` 子目录下正常工作。
 
 ---
 

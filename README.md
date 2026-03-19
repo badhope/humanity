@@ -98,7 +98,7 @@ This strategy ensures a polished, complete experience for each assessment type b
 ## Project Structure
 
 ```
-humanity/
+HumanOS/
 ├── public/
 │   └── assessments/              # Assessment question bank
 │       ├── registry.json         # Central registry index
@@ -345,8 +345,8 @@ fetchAssessmentBySlug(slug)
 
 ```bash
 # Clone repository
-git clone https://github.com/badhope/humanity.git
-cd humanity
+git clone https://github.com/badhope/HumanOS.git
+cd HumanOS
 
 # Install dependencies
 npm install
@@ -385,9 +385,9 @@ Output is in `dist/` directory.
 1. Push to `main` branch
 2. GitHub Actions automatically:
    - Runs `npm run build`
-   - Deploys to GitHub Pages at `https://badhope.github.io/humanity/`
+   - Deploys to GitHub Pages at `https://badhope.github.io/HumanOS/`
 
-**Note**: The site uses HashRouter. All routes work under `/humanity/` subdirectory.
+**Note**: The site uses HashRouter. All routes work under `/HumanOS/` subdirectory.
 
 ---
 

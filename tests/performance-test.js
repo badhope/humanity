@@ -10,7 +10,7 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 
-const BASE_URL = 'https://badhope.github.io/humanity';
+const BASE_URL = 'https://badhope.github.io/HumanOS';
 const CONCURRENT_USERS = 10;
 const REQUESTS_PER_USER = 5;
 const DELAY_BETWEEN_REQUESTS = 1000;
