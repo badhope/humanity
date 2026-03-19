@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Humanity - 专业心理测试平台，15+专业心理测评，探索内心世界">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>Humanity - 心理测试平台</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+
+  <div id="app">
+    <section id="splash-screen" class="page active">
+      <div class="splash-container">
+        <div class="splash-bg-effects">
+          <div class="splash-orb orb-1"></div>
+          <div class="splash-orb orb-2"></div>
+          <div class="splash-orb orb-3"></div>
+          <div class="splash-orb orb-4"></div>
+          <div class="splash-grid"></div>
+          <div class="splash-glow"></div>
+        </div>
+
+        <div class="splash-content">
+          <div class="splash-badge">
+            <span class="badge-icon">✨</span>
+            <span class="badge-text">专业心理测评平台</span>
+          </div>
+
+          <div class="splash-logo-container">
+            <div class="splash-logo-ring ring-1"></div>
+            <div class="splash-logo-ring ring-2"></div>
+            <div class="splash-logo-ring ring-3"></div>
+            <div class="splash-logo">
+              <span class="splash-emoji">🧠</span>
+            </div>
+          </div>
+
+          <h1 class="splash-title">
+            <span class="title-word">探索</span>
+            <span class="title-word">内心</span>
+            <span class="title-word">世界</span>
+          </h1>
+
+          <p class="splash-subtitle">发现真实的自己</p>
+
+          <div class="splash-stats-container">
+            <div class="splash-stat-card">
+              <div class="stat-icon-wrapper">
+                <span class="stat-icon">📝</span>
+              </div>
+              <div class="stat-number" data-target="15">0</div>
+              <div class="stat-label">专业测试</div>
+              <div class="stat-bar"><div class="stat-fill"></div></div>
+            </div>
+
+            <div class="splash-stat-card featured">
+              <div class="stat-icon-wrapper">
+                <span class="stat-icon">📊</span>
+              </div>
+              <div class="stat-number" data-target="600">0</div>
+              <div class="stat-label">精选题目</div>
+              <div class="stat-bar"><div class="stat-fill"></div></div>
+            </div>
+
+            <div class="splash-stat-card">
+              <div class="stat-icon-wrapper">
+                <span class="stat-icon">👥</span>
+              </div>
+              <div class="stat-number" data-target="100000">0</div>
+              <div class="stat-label">用户使用</div>
+              <div class="stat-bar"><div class="stat-fill"></div></div>
+            </div>
+          </div>
+
+          <div class="splash-features">
+            <div class="feature-tag">
+              <span>🧠 MBTI</span>
+            </div>
+            <div class="feature-tag">
+              <span>⭐ 大五人格</span>
+            </div>
+            <div class="feature-tag">
+              <span>💎 情商</span>
+            </div>
+            <div class="feature-tag">
+              <span>🔍 更多...</span>
+            </div>
+          </div>
+
+          <a href="welcome.html" id="enter-btn" class="enter-button">
+            <span class="btn-content">
+              <span class="btn-text">开始探索</span>
+              <span class="btn-arrow">→</span>
+            </span>
+            <span class="btn-glow"></span>
+            <span class="btn-ripple"></span>
+          </a>
+
+          <div class="splash-trust">
+            <span class="trust-icon">🔒</span>
+            <span class="trust-text">完全免费 · 隐私保护 · 即时结果</span>
+          </div>
+        </div>
+
+        <div class="splash-scroll-indicator">
+          <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/components/particle-bg.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof ParticleBackground !== 'undefined') {
+        new ParticleBackground('particle-canvas');
+      }
+
+      const stats = document.querySelectorAll('.stat-number');
+      const statCards = document.querySelectorAll('.splash-stat-card');
+      const titleWords = document.querySelectorAll('.title-word');
+      const featureTags = document.querySelectorAll('.feature-tag');
+      const logoRings = document.querySelectorAll('.splash-logo-ring');
+      const badge = document.querySelector('.splash-badge');
+      const subtitle = document.querySelector('.splash-subtitle');
+      const enterBtn = document.getElementById('enter-btn');
+      const trustText = document.querySelector('.splash-trust');
+
+      gsap.fromTo(badge,
+        { opacity: 0, y: -30, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: 0.2, ease: 'back.out(1.7)' }
+      );
+
+      gsap.fromTo(logoRings,
+        { scale: 0, rotation: -180, opacity: 0 },
+        { scale: 1, rotation: 0, opacity: 1, duration: 1.2, stagger: 0.15, delay: 0.4, ease: 'elastic.out(1, 0.5)' }
+      );
+
+      gsap.fromTo('.splash-logo',
+        { scale: 0, rotation: -360 },
+        { scale: 1, rotation: 0, duration: 1, delay: 0.8, ease: 'back.out(1.7)' }
+      );
+
+      gsap.fromTo(titleWords,
+        { opacity: 0, y: 60, rotationX: -90 },
+        { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.12, delay: 1, ease: 'back.out(1.7)' }
+      );
+
+      gsap.fromTo(subtitle,
+        { opacity: 0, x: -50 },
+        { opacity: 1, x: 0, duration: 0.6, delay: 1.4, ease: 'power2.out' }
+      );
+
+      gsap.fromTo(statCards,
+        { opacity: 0, y: 80, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.1, delay: 1.6, ease: 'back.out(1.7)' }
+      );
+
+      statCards.forEach((card, i) => {
+        gsap.fromTo(card.querySelector('.stat-bar .stat-fill'),
+          { width: '0%' },
+          { width: '100%', duration: 1.5, delay: 1.8 + i * 0.15, ease: 'power2.out' }
+        );
+      });
+
+      function animateNumber(el) {
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+
+        function update(currentTime) {
+          const elapsed = currentTime - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(eased * target);
+
+          if (target >= 10000) {
+            el.textContent = (current / 10000).toFixed(0) + '万+';
+          } else if (target >= 1000) {
+            el.textContent = Math.floor(current / 10) * 10 + '+';
+          } else {
+            el.textContent = current + '+';
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+        requestAnimationFrame(update);
+      }
+
+      setTimeout(() => {
+        stats.forEach(stat => animateNumber(stat));
+      }, 1800);
+
+      gsap.fromTo(featureTags,
+        { opacity: 0, scale: 0, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.08, delay: 2.2, ease: 'back.out(1.7)' }
+      );
+
+      gsap.fromTo(enterBtn,
+        { opacity: 0, y: 50, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: 2.6, ease: 'back.out(1.7)' }
+      );
+
+      gsap.fromTo(trustText,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, delay: 3, ease: 'power2.out' }
+      );
+
+      gsap.fromTo('.splash-scroll-indicator',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, delay: 3.2, ease: 'power2.out' }
+      );
+
+      const scrollIndicator = document.querySelector('.splash-scroll-indicator');
+      gsap.to('.scroll-wheel', {
+        y: 8,
+        duration: 0.8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
+
+      let btnHovered = false;
+      enterBtn.addEventListener('mouseenter', () => {
+        if (!btnHovered) {
+          btnHovered = true;
+          gsap.to(logoRings[0], { rotation: '+=30', duration: 0.3, ease: 'power2.out' });
+          gsap.to(logoRings[2], { rotation: '-=30', duration: 0.3, ease: 'power2.out' });
+        }
+      });
+
+      enterBtn.addEventListener('mouseleave', () => {
+        btnHovered = false;
+      });
+
+      featureTags.forEach(tag => {
+        tag.addEventListener('mouseenter', () => {
+          gsap.to(tag, { scale: 1.1, duration: 0.2, ease: 'power2.out' });
+        });
+        tag.addEventListener('mouseleave', () => {
+          gsap.to(tag, { scale: 1, duration: 0.2, ease: 'power2.out' });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

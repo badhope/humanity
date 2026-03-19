@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Humanity - 精选心理测试，MBTI人格、大五人格、情商测试等专业测评">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>选择测试 - Humanity</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+
+  <div id="app">
+    <section id="list-screen" class="page active">
+      <header class="list-header">
+        <a href="welcome.html" class="back-button">← 返回</a>
+        <h1 class="header-title">探索测试</h1>
+        <div class="header-actions">
+          <button class="search-toggle" id="searchToggle">🔍</button>
+        </div>
+      </header>
+
+      <div class="list-container">
+        <div class="search-bar" id="searchBar">
+          <input type="text" class="search-input" id="searchInput" placeholder="搜索测试...">
+          <button class="search-clear" id="searchClear">✕</button>
+        </div>
+
+        <nav class="category-tabs">
+          <button class="tab-btn active" data-category="all">
+            <span class="tab-icon">✨</span>
+            <span class="tab-text">全部</span>
+          </button>
+          <button class="tab-btn" data-category="personality">
+            <span class="tab-icon">🎭</span>
+            <span class="tab-text">人格</span>
+          </button>
+          <button class="tab-btn" data-category="emotion">
+            <span class="tab-icon">💕</span>
+            <span class="tab-text">情感</span>
+          </button>
+          <button class="tab-btn" data-category="mental">
+            <span class="tab-icon">🧠</span>
+            <span class="tab-text">心理</span>
+          </button>
+          <button class="tab-btn" data-category="cognition">
+            <span class="tab-icon">🧩</span>
+            <span class="tab-text">认知</span>
+          </button>
+          <button class="tab-btn" data-category="career">
+            <span class="tab-icon">💼</span>
+            <span class="tab-text">职业</span>
+          </button>
+        </nav>
+
+        <div class="test-grid" id="testGrid">
+          <a href="test.html?type=mbti" class="test-card" data-category="personality" data-keywords="mbti 十六型 人格 性格">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #ff6b6b, #feca57);">🧠</div>
+            <div class="test-info">
+              <h3>MBTI人格</h3>
+              <p>16型人格，探索你的思维模式与行为特点</p>
+              <div class="test-tags">
+                <span class="tag">热门</span>
+                <span class="tag">人格</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>60题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>10分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=bigfive" class="test-card" data-category="personality" data-keywords="bigfive 大五 人格 特质">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #48dbfb, #0abde3);">⭐</div>
+            <div class="test-info">
+              <h3>大五人格</h3>
+              <p>五大维度，全面评估核心人格特质</p>
+              <div class="test-tags">
+                <span class="tag">专业</span>
+                <span class="tag">人格</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>50题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>8分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=enneagram" class="test-card" data-category="personality" data-keywords="九型 人格 类型">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #a55eea, #8854d0);">🎯</div>
+            <div class="test-info">
+              <h3>九型人格</h3>
+              <p>九种核心人格类型，深入了解自我</p>
+              <div class="test-tags">
+                <span class="tag">人格</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>45题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>7分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=disc" class="test-card" data-category="personality" data-keywords="disc 性格 行为">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #26de81, #20bf6b);">⚡</div>
+            <div class="test-info">
+              <h3>DISC性格</h3>
+              <p>行为风格分析，了解你的沟通模式</p>
+              <div class="test-tags">
+                <span class="tag">职场</span>
+                <span class="tag">沟通</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>24题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>5分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=love" class="test-card" data-category="emotion" data-keywords="爱情 恋爱 亲密关系">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #fd79a8, #e84393);">💕</div>
+            <div class="test-info">
+              <h3>爱情语言</h3>
+              <p>了解你的爱情表达与接收方式</p>
+              <div class="test-tags">
+                <span class="tag">热门</span>
+                <span class="tag">情感</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>30题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>8分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=stress" class="test-card" data-category="mental" data-keywords="压力 焦虑 心理健康">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #fdcb6e, #e17055);">😰</div>
+            <div class="test-info">
+              <h3>压力测试</h3>
+              <p>科学评估你的压力水平与来源</p>
+              <div class="test-tags">
+                <span class="tag">热门</span>
+                <span class="tag">心理</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>24题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>8分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=gad7" class="test-card" data-category="mental" data-keywords="gad7 焦虑 筛查 心理">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #a29bfe, #6c5ce7);">📋</div>
+            <div class="test-info">
+              <h3>焦虑筛查(GAD-7)</h3>
+              <p>广泛性焦虑障碍快速筛查量表</p>
+              <div class="test-tags">
+                <span class="tag new">新增</span>
+                <span class="tag">专业</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>7题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>5分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=phq9" class="test-card" data-category="mental" data-keywords="phq9 抑郁 筛查 心理">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #74b9ff, #0984e3);">📋</div>
+            <div class="test-info">
+              <h3>抑郁筛查(PHQ-9)</h3>
+              <p>评估抑郁症状严重程度的标准化工具</p>
+              <div class="test-tags">
+                <span class="tag new">新增</span>
+                <span class="tag">专业</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>9题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>5分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=iq" class="test-card" data-category="cognition" data-keywords="iq 智商 智力 逻辑">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #dfe6e9, #b2bec3);">📊</div>
+            <div class="test-info">
+              <h3>IQ测试</h3>
+              <p>逻辑推理与空间想象能力评估</p>
+              <div class="test-tags">
+                <span class="tag">热门</span>
+                <span class="tag">认知</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>30题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>15分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=eq" class="test-card" data-category="cognition" data-keywords="eq 情商 情绪 社交">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #fab1a0, #e17055);">💝</div>
+            <div class="test-info">
+              <h3>情商测试</h3>
+              <p>情绪管理与社交技能全面评估</p>
+              <div class="test-tags">
+                <span class="tag">热门</span>
+                <span class="tag">认知</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>40题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>8分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=career" class="test-card" data-category="career" data-keywords="职业 生涯 发展 工作">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #667eea, #764ba2);">💼</div>
+            <div class="test-info">
+              <h3>职业倾向</h3>
+              <p>发现适合你的职业方向与发展路径</p>
+              <div class="test-tags">
+                <span class="tag">职场</span>
+                <span class="tag">职业</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>40题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>12分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+
+          <a href="test.html?type=learning" class="test-card" data-category="career" data-keywords="学习 风格 方式 教育">
+            <div class="card-decoration"></div>
+            <div class="test-icon" style="--gradient: linear-gradient(135deg, #11998e, #38ef7d);">📚</div>
+            <div class="test-info">
+              <h3>学习风格</h3>
+              <p>发现你的最佳学习方式与策略</p>
+              <div class="test-tags">
+                <span class="tag">教育</span>
+                <span class="tag">学习</span>
+              </div>
+            </div>
+            <div class="test-meta">
+              <span class="meta-icon">📝</span>
+              <span>30题</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-icon">⏱️</span>
+              <span>8分钟</span>
+            </div>
+            <div class="card-hover-effect"></div>
+          </a>
+        </div>
+
+        <div class="no-results" id="noResults">
+          <span class="no-results-icon">🔍</span>
+          <p class="no-results-text">未找到匹配的测试</p>
+          <p class="no-results-hint">尝试其他关键词或浏览全部测试</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/components/particle-bg.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof ParticleBackground !== 'undefined') {
+        new ParticleBackground('particle-canvas');
+      }
+
+      const searchToggle = document.getElementById('searchToggle');
+      const searchBar = document.getElementById('searchBar');
+      const searchInput = document.getElementById('searchInput');
+      const searchClear = document.getElementById('searchClear');
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const testCards = document.querySelectorAll('.test-card');
+      const noResults = document.getElementById('noResults');
+
+      let currentCategory = 'all';
+      let searchQuery = '';
+
+      function toggleSearch() {
+        searchBar.classList.toggle('active');
+        if (searchBar.classList.contains('active')) {
+          searchInput.focus();
+        } else {
+          searchInput.value = '';
+          searchQuery = '';
+          filterCards();
+        }
+      }
+
+      function filterCards() {
+        let visibleCount = 0;
+
+        testCards.forEach((card, index) => {
+          const cardCategory = card.dataset.category;
+          const keywords = (card.dataset.keywords || '').toLowerCase();
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const desc = card.querySelector('p').textContent.toLowerCase();
+          const searchStr = (keywords + ' ' + title + ' ' + desc).toLowerCase();
+
+          const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
+          const matchesSearch = searchQuery === '' || searchStr.includes(searchQuery.toLowerCase());
+
+          if (matchesCategory && matchesSearch) {
+            card.style.display = 'block';
+            gsap.fromTo(card,
+              { opacity: 0, y: 20, scale: 0.95 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.3, delay: visibleCount * 0.05, ease: 'power2.out' }
+            );
+            visibleCount++;
+          } else {
+            gsap.to(card, {
+              opacity: 0,
+              y: -10,
+              scale: 0.95,
+              duration: 0.2,
+              onComplete: () => { card.style.display = 'none'; }
+            });
+          }
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'flex' : 'none';
+      }
+
+      function switchCategory(category) {
+        currentCategory = category;
+        tabBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.category === category);
+        });
+        filterCards();
+      }
+
+      searchToggle.addEventListener('click', toggleSearch);
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        filterCards();
+        searchInput.focus();
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        filterCards();
+      });
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchCategory(btn.dataset.category);
+        });
+      });
+
+      testCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          if (!e.target.closest('a')) return;
+          localStorage.removeItem('testAnswers');
+          localStorage.removeItem('testTimeSeconds');
+          localStorage.removeItem('testTime');
+        });
+      });
+
+      gsap.fromTo('.list-header',
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+      );
+
+      gsap.fromTo('.category-tabs',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, delay: 0.1, ease: 'power2.out' }
+      );
+
+      testCards.forEach((card, index) => {
+        gsap.fromTo(card,
+          { opacity: 0, y: 40, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: 0.2 + index * 0.08, ease: 'back.out(1.4)' }
+        );
+      });
+
+      testCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { y: -8, scale: 1.02, duration: 0.3, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { y: 0, scale: 1, duration: 0.3, ease: 'power2.out' });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

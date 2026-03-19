@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Humanity - 专业心理测试平台，发现你的真实自我">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>探索 - Humanity</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+
+  <div id="app">
+    <section id="welcome-screen" class="page active">
+      <header class="welcome-header">
+        <a href="splash.html" class="back-button">← 返回</a>
+        <h1 class="header-title">探索内心</h1>
+        <a href="list.html" class="all-tests-btn">全部 →</a>
+      </header>
+
+      <div class="welcome-container">
+        <div class="welcome-hero">
+          <h2 class="hero-title">
+            <span class="hero-line">发现</span>
+            <span class="hero-line accent">真实的自己</span>
+          </h2>
+          <p class="hero-subtitle">选择你感兴趣的测试，开启自我探索之旅</p>
+        </div>
+
+        <div class="carousel-section">
+          <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack">
+              <div class="test-carousel-card" data-category="personality">
+                <div class="card-glow"></div>
+                <div class="card-icon">🎭</div>
+                <h3 class="card-title">人格测试</h3>
+                <p class="card-desc">MBTI、大五人格、九型人格、DISC</p>
+                <div class="card-meta">
+                  <span class="meta-item">📝 4个测试</span>
+                  <span class="meta-item">⏱️ 10-15分钟</span>
+                </div>
+                <a href="list.html?cat=personality" class="card-btn">开始 →</a>
+              </div>
+
+              <div class="test-carousel-card" data-category="emotion">
+                <div class="card-glow"></div>
+                <div class="card-icon">💕</div>
+                <h3 class="card-title">情感关系</h3>
+                <p class="card-desc">爱情语言、情感沟通、依恋类型</p>
+                <div class="card-meta">
+                  <span class="meta-item">📝 3个测试</span>
+                  <span class="meta-item">⏱️ 8-10分钟</span>
+                </div>
+                <a href="list.html?cat=emotion" class="card-btn">开始 →</a>
+              </div>
+
+              <div class="test-carousel-card" data-category="mental">
+                <div class="card-glow"></div>
+                <div class="card-icon">🧠</div>
+                <h3 class="card-title">心理健康</h3>
+                <p class="card-desc">压力测试、焦虑量表、抑郁筛查</p>
+                <div class="card-meta">
+                  <span class="meta-item">📝 5个测试</span>
+                  <span class="meta-item">⏱️ 5-10分钟</span>
+                </div>
+                <a href="list.html?cat=mental" class="card-btn">开始 →</a>
+              </div>
+
+              <div class="test-carousel-card" data-category="cognition">
+                <div class="card-glow"></div>
+                <div class="card-icon">🧩</div>
+                <h3 class="card-title">认知能力</h3>
+                <p class="card-desc">智商测试、情商测试、逻辑思维</p>
+                <div class="card-meta">
+                  <span class="meta-item">📝 4个测试</span>
+                  <span class="meta-item">⏱️ 10-15分钟</span>
+                </div>
+                <a href="list.html?cat=cognition" class="card-btn">开始 →</a>
+              </div>
+
+              <div class="test-carousel-card" data-category="ideology">
+                <div class="card-glow"></div>
+                <div class="card-icon">⚖️</div>
+                <h3 class="card-title">价值观</h3>
+                <p class="card-desc">政治倾向、道德判断、人生价值观</p>
+                <div class="card-meta">
+                  <span class="meta-item">📝 4个测试</span>
+                  <span class="meta-item">⏱️ 8-10分钟</span>
+                </div>
+                <a href="list.html?cat=ideology" class="card-btn">开始 →</a>
+              </div>
+
+              <div class="test-carousel-card" data-category="career">
+                <div class="card-glow"></div>
+                <div class="card-icon">💼</div>
+                <h3 class="card-title">职业发展</h3>
+                <p class="card-desc">职业倾向、学习风格、工作价值观</p>
+                <div class="card-meta">
+                  <span class="meta-item">📝 3个测试</span>
+                  <span class="meta-item">⏱️ 10-12分钟</span>
+                </div>
+                <a href="list.html?cat=career" class="card-btn">开始 →</a>
+              </div>
+            </div>
+
+            <div class="carousel-nav">
+              <button class="carousel-btn prev" id="carouselPrev">←</button>
+              <div class="carousel-dots" id="carouselDots"></div>
+              <button class="carousel-btn next" id="carouselNext">→</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <a href="list.html?type=mbti" class="quick-card">
+            <span class="quick-icon">🔥</span>
+            <span class="quick-text">MBTI</span>
+            <span class="quick-badge">热门</span>
+          </a>
+          <a href="list.html?type=gad7" class="quick-card">
+            <span class="quick-icon">📋</span>
+            <span class="quick-text">焦虑筛查</span>
+            <span class="quick-badge new">新增</span>
+          </a>
+          <a href="list.html?type=eq" class="quick-card">
+            <span class="quick-icon">💎</span>
+            <span class="quick-text">情商测试</span>
+            <span class="quick-badge">推荐</span>
+          </a>
+          <a href="list.html" class="quick-card more">
+            <span class="quick-icon">+</span>
+            <span class="quick-text">更多</span>
+          </a>
+        </div>
+
+        <div class="welcome-footer">
+          <p class="footer-text">
+            <span class="footer-icon">✨</span>
+            15个专业测试 · 600+精选题目 · 完全免费
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/components/particle-bg.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof ParticleBackground !== 'undefined') {
+        new ParticleBackground('particle-canvas');
+      }
+
+      const track = document.getElementById('carouselTrack');
+      const cards = document.querySelectorAll('.test-carousel-card');
+      const prevBtn = document.getElementById('carouselPrev');
+      const nextBtn = document.getElementById('carouselNext');
+      const dotsContainer = document.getElementById('carouselDots');
+
+      let currentIndex = 0;
+      const cardCount = cards.length;
+      let visibleCards = 3;
+      let autoplayInterval;
+
+      function updateVisibleCards() {
+        if (window.innerWidth < 768) {
+          visibleCards = 1;
+        } else if (window.innerWidth < 1200) {
+          visibleCards = 2;
+        } else {
+          visibleCards = 3;
+        }
+      }
+
+      function createDots() {
+        dotsContainer.innerHTML = '';
+        const dotCount = Math.max(1, cardCount - visibleCards + 1);
+        for (let i = 0; i < dotCount; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
+          dot.addEventListener('click', () => goToSlide(i));
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function updateCarousel(animate = true) {
+        const cardWidth = cards[0].offsetWidth + 24;
+        const maxIndex = Math.max(0, cardCount - visibleCards);
+        currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+
+        const offset = currentIndex * cardWidth;
+
+        if (animate) {
+          gsap.to(track, {
+            x: -offset,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+        } else {
+          track.style.transform = `translateX(${-offset}px)`;
+        }
+
+        document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentIndex);
+        });
+
+        prevBtn.style.opacity = currentIndex === 0 ? '0.3' : '1';
+        nextBtn.style.opacity = currentIndex >= maxIndex ? '0.3' : '1';
+      }
+
+      function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+      }
+
+      function nextSlide() {
+        const maxIndex = Math.max(0, cardCount - visibleCards);
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateCarousel();
+        }
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      }
+
+      function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 4000);
+      }
+
+      function stopAutoplay() {
+        clearInterval(autoplayInterval);
+      }
+
+      prevBtn.addEventListener('click', () => {
+        stopAutoplay();
+        prevSlide();
+        startAutoplay();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        stopAutoplay();
+        nextSlide();
+        startAutoplay();
+      });
+
+      track.addEventListener('mouseenter', stopAutoplay);
+      track.addEventListener('mouseleave', startAutoplay);
+
+      window.addEventListener('resize', () => {
+        updateVisibleCards();
+        createDots();
+        updateCarousel(false);
+      });
+
+      updateVisibleCards();
+      createDots();
+      updateCarousel(false);
+      startAutoplay();
+
+      const heroTitle = document.querySelector('.hero-title');
+      const heroSubtitle = document.querySelector('.hero-subtitle');
+      const quickCards = document.querySelectorAll('.quick-card');
+      const footer = document.querySelector('.welcome-footer');
+
+      gsap.fromTo(heroTitle,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+      );
+
+      gsap.fromTo(heroSubtitle,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: 'power2.out' }
+      );
+
+      gsap.fromTo(cards,
+        { opacity: 0, y: 60, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, delay: 0.4, ease: 'back.out(1.4)' }
+      );
+
+      gsap.fromTo(quickCards,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, delay: 0.8, ease: 'back.out(1.4)' }
+      );
+
+      gsap.fromTo(footer,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, delay: 1, ease: 'power2.out' }
+      );
+
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { y: -8, scale: 1.02, duration: 0.3, ease: 'power2.out' });
+          card.querySelector('.card-glow').style.opacity = '1';
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { y: 0, scale: 1, duration: 0.3, ease: 'power2.out' });
+          card.querySelector('.card-glow').style.opacity = '0';
+        });
+      });
+
+      quickCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { y: -4, scale: 1.05, duration: 0.2, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { y: 0, scale: 1, duration: 0.2, ease: 'power2.out' });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

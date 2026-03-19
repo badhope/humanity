@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Humanity - 开始你的心理测试，探索内心世界">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>测试 - Humanity</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+
+  <div id="app">
+    <section id="test-screen" class="page active">
+      <header class="test-header">
+        <a href="list.html" class="back-button">
+          <span class="back-icon">←</span>
+          <span class="back-text">退出</span>
+        </a>
+        <div class="test-info">
+          <span class="test-name" id="test-name">加载中...</span>
+        </div>
+        <button class="quit-btn" id="quit-btn">
+          <span class="quit-icon">📋</span>
+          <span class="quit-text">答题卡</span>
+        </button>
+      </header>
+
+      <div class="test-container">
+        <div class="progress-ring-container">
+          <svg class="progress-ring" viewBox="0 0 120 120">
+            <circle class="progress-ring-bg" cx="60" cy="60" r="54"/>
+            <circle class="progress-ring-fill" id="progressRing" cx="60" cy="60" r="54"/>
+          </svg>
+          <div class="progress-text">
+            <span class="progress-current" id="progress-current">1</span>
+            <span class="progress-sep">/</span>
+            <span class="progress-total" id="progress-total">60</span>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="question-badge" id="question-dimension">维度</div>
+          <h2 class="question-text" id="question-text">请稍候...</h2>
+        </div>
+
+        <div class="options-section" id="options-container">
+          <div class="loading-options">
+            <div class="loading-spinner"></div>
+            <p>正在加载题目...</p>
+          </div>
+        </div>
+
+        <div class="test-footer">
+          <button class="nav-btn secondary" id="prev-btn">
+            <span class="nav-icon">←</span>
+            <span class="nav-text">上一题</span>
+          </button>
+
+          <div class="answer-indicator" id="answer-indicator">
+            <span class="indicator-dot"></span>
+            <span class="indicator-text">未作答</span>
+          </div>
+
+          <button class="nav-btn primary" id="next-btn">
+            <span class="nav-text">下一题</span>
+            <span class="nav-icon">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="question-navigator" id="question-navigator">
+        <div class="navigator-overlay" id="navigator-overlay"></div>
+        <div class="navigator-panel">
+          <div class="navigator-header">
+            <h3>答题卡</h3>
+            <div class="navigator-stats">
+              <span class="stat answered">已答: <strong id="answered-count">0</strong></span>
+              <span class="stat unanswered">未答: <strong id="unanswered-count">60</strong></span>
+            </div>
+            <button class="close-navigator" id="close-navigator">×</button>
+          </div>
+          <div class="navigator-grid" id="navigator-grid"></div>
+          <div class="navigator-footer">
+            <button class="submit-btn" id="submit-btn">
+              <span>提交答案</span>
+              <span class="submit-arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-bg-effects">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils/storage.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  <script src="js/components/particle-bg.js"></script>
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const testType = params.get('type') || 'mbti';
+      const testData = window.TEST_DATA && window.TEST_DATA[testType];
+
+      let currentQuestion = 0;
+      let answers = [];
+      let timerInterval = null;
+      let seconds = 0;
+      let isAnimating = false;
+
+      const dimensionMap = {
+        'EI': '外向-内向', 'SN': '感觉-直觉', 'TF': '思考-情感', 'JP': '判断-知觉',
+        'O': '开放性', 'C': '尽责性', 'E': '外向性', 'A': '宜人性', 'N': '神经质',
+        'D': '支配性', 'I': '影响性', 'S': '稳健性', 'DISC_C': '谨慎性',
+        'economic': '经济', 'social': '社会', 'individual': '个人', 'collective': '集体',
+        'care': '关怀', 'fairness': '公平', 'loyalty': '忠诚', 'authority': '权威',
+        'sanctity': '神圣', 'liberty': '自由',
+        'logic': '逻辑', 'spatial': '空间', 'pattern': '规律',
+        'self_awareness': '自我意识', 'self_regulation': '自我调节', 'motivation': '动力',
+        'empathy': '同理心', 'social_skill': '社交技能',
+        'words': '言语表达', 'time': '高质量陪伴', 'gifts': '礼物', 'service': '服务行动', 'touch': '身体接触',
+        'work': '工作压力', 'life': '生活压力', 'emotion': '情绪压力', 'social_dimension': '社交压力', 'health': '健康压力',
+        'realistic': '实际型', 'investigative': '研究型', 'artistic': '艺术型', 'enterprising': '企业型', 'conventional': '常规型',
+        'visual': '视觉型', 'auditory': '听觉型', 'reading': '阅读型', 'kinesthetic': '动觉型',
+        1: '完美型', 2: '助人型', 3: '成就型', 4: '独特型', 5: '探索型', 6: '忠诚型', 7: '活跃型', 8: '领袖型', 9: '和平型'
+      };
+
+      function startTimer() {
+        timerInterval = setInterval(() => {
+          seconds++;
+          const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+          const secs = (seconds % 60).toString().padStart(2, '0');
+          const timerEl = document.getElementById('test-timer');
+          if (timerEl) timerEl.textContent = `${mins}:${secs}`;
+          localStorage.setItem('testTimeSeconds', seconds);
+          localStorage.setItem('testTime', `${mins}:${secs}`);
+        }, 1000);
+      }
+
+      function updateProgressRing() {
+        if (!testData) return;
+        const progress = (currentQuestion + 1) / testData.questions.length;
+        const circumference = 2 * Math.PI * 54;
+        const offset = circumference * (1 - progress);
+        const ring = document.getElementById('progressRing');
+        ring.style.strokeDasharray = `${circumference}`;
+        ring.style.strokeDashoffset = `${offset}`;
+        document.getElementById('progress-current').textContent = currentQuestion + 1;
+        document.getElementById('progress-total').textContent = testData.questions.length;
+      }
+
+      function updateAnswerIndicator() {
+        const indicator = document.getElementById('answer-indicator');
+        const isAnswered = answers[currentQuestion] !== undefined && answers[currentQuestion] !== null;
+        indicator.classList.toggle('answered', isAnswered);
+        indicator.querySelector('.indicator-text').textContent = isAnswered ? '已作答' : '未作答';
+      }
+
+      function loadQuestion(index, animate = true) {
+        if (!testData || !testData.questions[index]) return;
+
+        const q = testData.questions[index];
+        const dim = q.dimension || q.types?.[0] || '';
+        const dimText = dimensionMap[dim] || '';
+
+        document.getElementById('question-dimension').textContent = dimText;
+        document.getElementById('question-text').textContent = q.question;
+
+        const optionsContainer = document.getElementById('options-container');
+        const optionLabels = q.options.map((_, i) => String.fromCharCode(65 + i));
+
+        if (animate && !isAnimating) {
+          isAnimating = true;
+
+          gsap.to('.question-section', {
+            opacity: 0,
+            y: -20,
+            duration: 0.2,
+            ease: 'power2.in',
+            onComplete: () => {
+              document.getElementById('question-text').textContent = q.question;
+              gsap.fromTo('.question-section',
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
+              );
+            }
+          });
+
+          gsap.to(optionsContainer, {
+            opacity: 0,
+            y: 20,
+            duration: 0.2,
+            ease: 'power2.in',
+            onComplete: () => {
+              renderOptions(q, optionLabels);
+              gsap.fromTo(optionsContainer,
+                { opacity: 0, y: -20 },
+                { opacity: 1, y: 0, duration: 0.3, delay: 0.1, ease: 'power2.out', onComplete: () => { isAnimating = false; } }
+              );
+            }
+          });
+        } else {
+          renderOptions(q, optionLabels);
+        }
+
+        updateProgressRing();
+        updateAnswerIndicator();
+
+        document.getElementById('prev-btn').disabled = index === 0;
+        document.getElementById('prev-btn').style.opacity = index === 0 ? '0.3' : '1';
+
+        const nextBtn = document.getElementById('next-btn');
+        const isLast = index === testData.questions.length - 1;
+        nextBtn.querySelector('.nav-text').textContent = isLast ? '提交' : '下一题';
+        nextBtn.querySelector('.nav-icon').textContent = isLast ? '✓' : '→';
+
+        updateNavigator();
+      }
+
+      function renderOptions(q, optionLabels) {
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = q.options.map((opt, i) =>
+          `<button class="option-card ${answers[currentQuestion] === i ? 'selected' : ''}" data-value="${i}">
+            <span class="option-label">${optionLabels[i]}</span>
+            <span class="option-text">${opt}</span>
+            <span class="option-check">✓</span>
+          </button>`
+        ).join('');
+
+        document.querySelectorAll('.option-card').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const value = parseInt(this.dataset.value);
+            answers[currentQuestion] = value;
+            localStorage.setItem('testAnswers', JSON.stringify(answers));
+
+            document.querySelectorAll('.option-card').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+
+            gsap.fromTo(this,
+              { scale: 0.95 },
+              { scale: 1, duration: 0.2, ease: 'back.out(1.7)' }
+            );
+
+            updateAnswerIndicator();
+            updateNavigator();
+          });
+        });
+      }
+
+      function updateNavigator() {
+        if (!testData) return;
+        const total = testData.questions.length;
+        const answered = answers.filter(a => a !== undefined && a !== null).length;
+
+        document.getElementById('answered-count').textContent = answered;
+        document.getElementById('unanswered-count').textContent = total - answered;
+
+        const grid = document.getElementById('navigator-grid');
+        grid.innerHTML = '';
+
+        for (let i = 0; i < total; i++) {
+          const btn = document.createElement('button');
+          btn.className = `nav-item ${answers[i] !== undefined ? 'answered' : ''} ${i === currentQuestion ? 'current' : ''}`;
+          btn.textContent = i + 1;
+          btn.addEventListener('click', () => {
+            currentQuestion = i;
+            loadQuestion(i);
+            closeNavigator();
+          });
+          grid.appendChild(btn);
+        }
+      }
+
+      function openNavigator() {
+        document.getElementById('question-navigator').classList.add('active');
+        gsap.fromTo('.navigator-panel',
+          { x: '100%' },
+          { x: 0, duration: 0.3, ease: 'power2.out' }
+        );
+      }
+
+      function closeNavigator() {
+        gsap.to('.navigator-panel', {
+          x: '100%',
+          duration: 0.3,
+          ease: 'power2.in',
+          onComplete: () => {
+            document.getElementById('question-navigator').classList.remove('active');
+          }
+        });
+      }
+
+      function submitTest() {
+        if (!testData) return;
+        const answered = answers.filter(a => a !== undefined && a !== null).length;
+        if (answered < testData.questions.length) {
+          if (!confirm(`您还有 ${testData.questions.length - answered} 题未答，确定要提交吗？`)) return;
+        }
+        clearInterval(timerInterval);
+        window.location.href = 'result.html';
+      }
+
+      function init() {
+        const params = new URLSearchParams(window.location.search);
+        const testType = params.get('type') || 'mbti';
+
+        localStorage.setItem('currentTestType', testType);
+
+        const savedAnswers = localStorage.getItem('testAnswers');
+        if (savedAnswers) {
+          answers = JSON.parse(savedAnswers);
+        } else if (testData) {
+          answers = new Array(testData.questions.length).fill(null);
+        }
+
+        const savedTime = localStorage.getItem('testTimeSeconds');
+        if (savedTime) {
+          seconds = parseInt(savedTime);
+        }
+
+        if (testData) {
+          document.getElementById('test-name').textContent = testData.name;
+          document.getElementById('progress-total').textContent = testData.questions.length;
+
+          const answeredCount = answers.filter(a => a !== undefined && a !== null).length;
+          if (answeredCount > 0 && answeredCount < testData.questions.length) {
+            currentQuestion = answeredCount;
+          }
+
+          loadQuestion(currentQuestion, false);
+          startTimer();
+        } else {
+          document.getElementById('question-text').textContent = '未找到测试数据';
+          document.getElementById('options-container').innerHTML = '<p>请返回重新选择测试</p>';
+        }
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+          if (currentQuestion > 0 && !isAnimating) {
+            currentQuestion--;
+            loadQuestion(currentQuestion);
+          }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+          if (currentQuestion < testData.questions.length - 1 && !isAnimating) {
+            currentQuestion++;
+            loadQuestion(currentQuestion);
+          } else if (currentQuestion === testData.questions.length - 1) {
+            submitTest();
+          }
+        });
+
+        document.getElementById('quit-btn').addEventListener('click', openNavigator);
+        document.getElementById('close-navigator').addEventListener('click', closeNavigator);
+        document.getElementById('navigator-overlay').addEventListener('click', closeNavigator);
+        document.getElementById('submit-btn').addEventListener('click', submitTest);
+
+        gsap.fromTo('.test-header',
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+        );
+
+        gsap.fromTo('.progress-ring-container',
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.6, delay: 0.2, ease: 'back.out(1.7)' }
+        );
+
+        gsap.fromTo('.question-section',
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.5, delay: 0.3, ease: 'power2.out' }
+        );
+
+        gsap.fromTo('.options-section',
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.5, delay: 0.4, ease: 'power2.out' }
+        );
+
+        gsap.fromTo('.test-footer',
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, delay: 0.5, ease: 'power2.out' }
+        );
+      }
+
+      if (typeof ParticleBackground !== 'undefined') {
+        new ParticleBackground('particle-canvas');
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
