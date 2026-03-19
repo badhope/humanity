@@ -1,0 +1,249 @@
+{
+  "id": "mbti-basic",
+  "slug": "mbti-basic",
+  "name": "MBTI 职业性格测试",
+  "category": "personality",
+  "description": "基于 Myers-Briggs Type Indicator 理论，帮助您了解自己在能量获取、信息获取、决策方式、生活态度四个维度上的倾向，从而识别您的性格类型。",
+  "shortDescription": "探索您的性格类型与职业匹配",
+  "version": "1.0.0",
+  "author": "Humanity Team",
+  "language": "zh-CN",
+  "estimatedMinutes": 10,
+  "questionCount": 12,
+  "difficulty": "easy",
+  "tags": ["人格", "性格", "MBTI", "职业", "自我探索"],
+  "dimensions": [
+    {
+      "id": "EI",
+      "name": "能量倾向",
+      "description": "外向 (E) vs 内向 (I)：您获取能量的方式"
+    },
+    {
+      "id": "SN",
+      "name": "感知倾向",
+      "description": "感觉 (S) vs 直觉 (N)：您获取信息的方式"
+    },
+    {
+      "id": "TF",
+      "name": "判断倾向",
+      "description": "思考 (T) vs 情感 (F)：您做决策的方式"
+    },
+    {
+      "id": "JP",
+      "name": "生活方式",
+      "description": "判断 (J) vs 知觉 (P)：您对待外界的态度"
+    }
+  ],
+  "scoring": {
+    "type": "weighted",
+    "dimensionScores": {
+      "EI": { "weights": { "E": 1, "I": -1 } },
+      "SN": { "weights": { "S": -1, "N": 1 } },
+      "TF": { "weights": { "T": 1, "F": -1 } },
+      "JP": { "weights": { "J": 1, "P": -1 } }
+    },
+    "normalize": true,
+    "minScore": -12,
+    "maxScore": 12
+  },
+  "resultProfiles": [
+    {
+      "id": "INTJ",
+      "name": "建筑师",
+      "description": "您是一位富有想象力和战略思维的人，善于分析问题，具有强烈的独立性和目标导向。",
+      "conditions": [
+        { "dimension": "EI", "operator": "lte", "value": 0 },
+        { "dimension": "SN", "operator": "gte", "value": 0 },
+        { "dimension": "TF", "operator": "gte", "value": 0 },
+        { "dimension": "JP", "operator": "gte", "value": 0 }
+      ],
+      "tags": ["理性", "独立", "战略"],
+      "careers": ["战略咨询", "金融分析", "科研人员", "软件架构师"]
+    },
+    {
+      "id": "ENFP",
+      "name": "竞选者",
+      "description": "您是一位充满热情和创意的人，善于激励他人，具有强烈的表达欲和探索精神。",
+      "conditions": [
+        { "dimension": "EI", "operator": "gte", "value": 0 },
+        { "dimension": "SN", "operator": "gte", "value": 0 },
+        { "dimension": "TF", "operator": "lte", "value": 0 },
+        { "dimension": "JP", "operator": "lte", "value": 0 }
+      ],
+      "tags": ["热情", "创意", "激励"],
+      "careers": ["市场营销", "公关", "培训师", "创意总监"]
+    },
+    {
+      "id": "ISTJ",
+      "name": "物流师",
+      "description": "您是一位务实可靠的人，做事认真负责，注重细节，具有强烈的责任感和原则性。",
+      "conditions": [
+        { "dimension": "EI", "operator": "lte", "value": 0 },
+        { "dimension": "SN", "operator": "lte", "value": 0 },
+        { "dimension": "TF", "operator": "gte", "value": 0 },
+        { "dimension": "JP", "operator": "gte", "value": 0 }
+      ],
+      "tags": ["务实", "可靠", "负责"],
+      "careers": ["财务管理", "审计", "律师", "行政主管"]
+    },
+    {
+      "id": "ESFJ",
+      "name": "执政官",
+      "description": "您是一位热情友善的人，善于社交，关注他人需求，喜欢帮助和照顾别人。",
+      "conditions": [
+        { "dimension": "EI", "operator": "gte", "value": 0 },
+        { "dimension": "SN", "operator": "lte", "value": 0 },
+        { "dimension": "TF", "operator": "lte", "value": 0 },
+        { "dimension": "JP", "operator": "gte", "value": 0 }
+      ],
+      "tags": ["友善", "关怀", "责任"],
+      "careers": ["人力资源", "教师", "护士", "社会工作者"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "mbti-q1",
+      "text": "在社交场合中，您通常会：",
+      "type": "single-choice",
+      "dimension": "EI",
+      "options": [
+        { "id": "A", "text": "主动与陌生人交谈，享受社交的乐趣", "value": 2 },
+        { "id": "B", "text": "与熟悉的人聊天，对陌生人保持距离", "value": 1 },
+        { "id": "C", "text": "观察别人，等待别人来接近", "value": -1 },
+        { "id": "D", "text": "一个人安静地待着，避免社交", "value": -2 }
+      ]
+    },
+    {
+      "id": "mbti-q2",
+      "text": "周末时光您更喜欢：",
+      "type": "single-choice",
+      "dimension": "EI",
+      "options": [
+        { "id": "A", "text": "约朋友一起出去玩，参加聚会", "value": 2 },
+        { "id": "B", "text": "和几个好朋友小聚", "value": 1 },
+        { "id": "C", "text": "在家看书或看电影", "value": -1 },
+        { "id": "D", "text": "独自去户外探索或旅行", "value": -2 }
+      ]
+    },
+    {
+      "id": "mbti-q3",
+      "text": "当您独自一人时，您会感到：",
+      "type": "single-choice",
+      "dimension": "EI",
+      "options": [
+        { "id": "A", "text": "有些不自在，需要找人交流", "value": -2 },
+        { "id": "B", "text": "有点无聊，但能接受", "value": -1 },
+        { "id": "C", "text": "享受独处的宁静时光", "value": 1 },
+        { "id": "D", "text": "非常充实，可以深度思考", "value": 2 }
+      ]
+    },
+    {
+      "id": "mbti-q4",
+      "text": "您更关注事物的：",
+      "type": "single-choice",
+      "dimension": "SN",
+      "options": [
+        { "id": "A", "text": "具体的事实和数据", "value": -2 },
+        { "id": "B", "text": "实际可行的方案", "value": -1 },
+        { "id": "C", "text": "未来的可能性", "value": 1 },
+        { "id": "D", "text": "抽象的概念和关联", "value": 2 }
+      ]
+    },
+    {
+      "id": "mbti-q5",
+      "text": "阅读小说时，您更看重：",
+      "type": "single-choice",
+      "dimension": "SN",
+      "options": [
+        { "id": "A", "text": "扣人心弦的故事情节", "value": -1 },
+        { "id": "B", "text": "生动真实的人物描写", "value": -1 },
+        { "id": "C", "text": "深刻的人生哲理", "value": 1 },
+        { "id": "D", "text": "作者独特的写作风格", "value": 2 }
+      ]
+    },
+    {
+      "id": "mbti-q6",
+      "text": "当您学习新东西时，您会：",
+      "type": "single-choice",
+      "dimension": "SN",
+      "options": [
+        { "id": "A", "text": "看详细的教程和步骤说明", "value": -2 },
+        { "id": "B", "text": "边做边学，遇到问题再查资料", "value": -1 },
+        { "id": "C", "text": "先了解整体框架和原理", "value": 1 },
+        { "id": "D", "text": "尝试不同方法，探索创新", "value": 2 }
+      ]
+    },
+    {
+      "id": "mbti-q7",
+      "text": "做决策时，您更倾向于：",
+      "type": "single-choice",
+      "dimension": "TF",
+      "options": [
+        { "id": "A", "text": "基于客观分析和逻辑推理", "value": 2 },
+        { "id": "B", "text": "权衡利弊得失", "value": 1 },
+        { "id": "C", "text": "考虑对他人的影响", "value": -1 },
+        { "id": "D", "text": "听从内心的感受", "value": -2 }
+      ]
+    },
+    {
+      "id": "mbti-q8",
+      "text": "当朋友向您倾诉烦恼时，您会：",
+      "type": "single-choice",
+      "dimension": "TF",
+      "options": [
+        { "id": "A", "text": "帮他分析问题，提出解决方案", "value": 2 },
+        { "id": "B", "text": "给予安慰和情感支持", "value": -2 },
+        { "id": "C", "text": "先倾听，再给建议", "value": 1 },
+        { "id": "D", "text": "分享类似经历表示理解", "value": -1 }
+      ]
+    },
+    {
+      "id": "mbti-q9",
+      "text": "您认为自己更看重：",
+      "type": "single-choice",
+      "dimension": "TF",
+      "options": [
+        { "id": "A", "text": "公平公正的原则", "value": 2 },
+        { "id": "B", "text": "和谐的人际关系", "value": -2 },
+        { "id": "C", "text": "效率和结果", "value": 1 },
+        { "id": "D", "text": "每个人的感受", "value": -1 }
+      ]
+    },
+    {
+      "id": "mbti-q10",
+      "text": "您更喜欢的生活方式是：",
+      "type": "single-choice",
+      "dimension": "JP",
+      "options": [
+        { "id": "A", "text": "提前计划，有条不紊", "value": 2 },
+        { "id": "B", "text": "大致计划，保留弹性", "value": 1 },
+        { "id": "C", "text": "随机应变，顺其自然", "value": -1 },
+        { "id": "D", "text": "灵活自由，不受约束", "value": -2 }
+      ]
+    },
+    {
+      "id": "mbti-q11",
+      "text": "面对规则和计划时，您会：",
+      "type": "single-choice",
+      "dimension": "JP",
+      "options": [
+        { "id": "A", "text": "严格遵守，按照计划执行", "value": 2 },
+        { "id": "B", "text": "基本遵守，需要时微调", "value": 1 },
+        { "id": "C", "text": "根据情况灵活调整", "value": -1 },
+        { "id": "D", "text": "不太在意，随性而为", "value": -2 }
+      ]
+    },
+    {
+      "id": "mbti-q12",
+      "text": "您更喜欢什么样的工作方式：",
+      "type": "single-choice",
+      "dimension": "JP",
+      "options": [
+        { "id": "A", "text": "明确的目标和截止日期", "value": 2 },
+        { "id": "B", "text": "有清晰的任务清单", "value": 1 },
+        { "id": "C", "text": "有挑战性的项目", "value": -1 },
+        { "id": "D", "text": "自由探索的空间", "value": -2 }
+      ]
+    }
+  ]
+}

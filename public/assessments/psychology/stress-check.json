@@ -1,0 +1,247 @@
+{
+  "id": "stress-check",
+  "slug": "stress-check",
+  "name": "压力指数评估",
+  "category": "psychology",
+  "description": "通过评估您在压力负荷、情绪波动、恢复能力三个维度上的表现，帮助您了解当前的心理压力状态，并提供科学的调节建议。",
+  "shortDescription": "了解您的压力水平与心理状态",
+  "version": "1.0.0",
+  "author": "Humanity Team",
+  "language": "zh-CN",
+  "estimatedMinutes": 8,
+  "questionCount": 12,
+  "difficulty": "easy",
+  "tags": ["压力", "心理健康", "情绪", "压力管理"],
+  "dimensions": [
+    {
+      "id": "stressLoad",
+      "name": "压力负荷",
+      "description": "您在工作、生活、经济等方面的压力感知程度"
+    },
+    {
+      "id": "emotionalStrain",
+      "name": "情绪波动",
+      "description": "您在焦虑、抑郁、易怒等负面情绪上的表现程度"
+    },
+    {
+      "id": "recoveryCapacity",
+      "name": "恢复能力",
+      "description": "您在面对压力后的心理恢复和调节能力"
+    }
+  ],
+  "scoring": {
+    "type": "weighted",
+    "dimensionScores": {
+      "stressLoad": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "emotionalStrain": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "recoveryCapacity": { "weights": { "high": 1, "medium": 2, "low": 3 } }
+    },
+    "normalize": true,
+    "minScore": 12,
+    "maxScore": 60
+  },
+  "resultProfiles": [
+    {
+      "id": "balanced",
+      "name": "平衡状态",
+      "description": "您目前处于较好的心理平衡状态，能够有效应对日常生活中的压力，情绪稳定，恢复能力良好。",
+      "conditions": [
+        { "dimension": "stressLoad", "operator": "lte", "value": 24 }
+      ],
+      "tags": ["平衡", "健康", "稳定"],
+      "recommendations": ["继续保持当前的生活方式", "坚持规律运动和充足睡眠", "培养兴趣爱好丰富生活"]
+    },
+    {
+      "id": "mild-stress",
+      "name": "轻度压力",
+      "description": "您目前承受着一定程度的压力，但尚在可承受范围内。建议适当调整节奏，注意休息。",
+      "conditions": [
+        { "dimension": "stressLoad", "operator": "between", "value": [25, 36] }
+      ],
+      "tags": ["轻度", "可调节", "注意休息"],
+      "recommendations": ["合理安排工作和休息时间", "适当增加户外活动时间", "尝试冥想或深呼吸放松"]
+    },
+    {
+      "id": "moderate-stress",
+      "name": "中度压力",
+      "description": "您目前承受较大的心理压力，可能出现情绪波动、睡眠问题等。建议认真对待并采取积极措施。",
+      "conditions": [
+        { "dimension": "stressLoad", "operator": "between", "value": [37, 48] }
+      ],
+      "tags": ["中度", "重视", "行动"],
+      "recommendations": ["分析压力来源并尝试解决", "寻求朋友或家人支持", "考虑咨询专业心理顾问"]
+    },
+    {
+      "id": "high-stress",
+      "name": "高压力警示",
+      "description": "您的压力水平较高，可能已经影响到身心健康。建议立即采取行动，必要时寻求专业帮助。",
+      "conditions": [
+        { "dimension": "stressLoad", "operator": "gte", "value": 49 }
+      ],
+      "tags": ["高风险", "紧急", "求助"],
+      "recommendations": ["优先保证基本作息和饮食", "减少不必要的任务和承诺", "强烈建议寻求专业心理咨询"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "stress-q1",
+      "text": "最近两周，您是否经常感到紧张或不安？",
+      "type": "likert-5",
+      "dimension": "emotionalStrain",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q2",
+      "text": "我能够有效地处理工作和生活中的各种要求",
+      "type": "likert-5",
+      "dimension": "recoveryCapacity",
+      "reverse": true,
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 5 },
+        { "id": "B", "text": "不同意", "value": 4 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 2 },
+        { "id": "E", "text": "非常同意", "value": 1 }
+      ]
+    },
+    {
+      "id": "stress-q3",
+      "text": "我经常因为事情太多而感到焦虑",
+      "type": "likert-5",
+      "dimension": "stressLoad",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q4",
+      "text": "睡眠质量方面，我觉得",
+      "type": "likert-5",
+      "dimension": "recoveryCapacity",
+      "options": [
+        { "id": "A", "text": "非常好，白天精力充沛", "value": 1 },
+        { "id": "B", "text": "比较好，偶尔失眠", "value": 2 },
+        { "id": "C", "text": "一般，有时睡不好", "value": 3 },
+        { "id": "D", "text": "不太好，经常失眠", "value": 4 },
+        { "id": "E", "text": "很差，严重影响白天状态", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q5",
+      "text": "面对困难时，我通常能保持冷静并找到解决办法",
+      "type": "likert-5",
+      "dimension": "recoveryCapacity",
+      "reverse": true,
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 5 },
+        { "id": "B", "text": "不同意", "value": 4 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 2 },
+        { "id": "E", "text": "非常同意", "value": 1 }
+      ]
+    },
+    {
+      "id": "stress-q6",
+      "text": "我经常因为时间不够用而感到压力",
+      "type": "likert-5",
+      "dimension": "stressLoad",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q7",
+      "text": "我容易因为小事而发脾气",
+      "type": "likert-5",
+      "dimension": "emotionalStrain",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q8",
+      "text": "我对自己目前的经济状况感到担忧",
+      "type": "likert-5",
+      "dimension": "stressLoad",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q9",
+      "text": "我能够从压力中快速恢复过来",
+      "type": "likert-5",
+      "dimension": "recoveryCapacity",
+      "reverse": true,
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 5 },
+        { "id": "B", "text": "不同意", "value": 4 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 2 },
+        { "id": "E", "text": "非常同意", "value": 1 }
+      ]
+    },
+    {
+      "id": "stress-q10",
+      "text": "我经常感到心情低落或沮丧",
+      "type": "likert-5",
+      "dimension": "emotionalStrain",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "stress-q11",
+      "text": "我对自己的人际关系感到满意",
+      "type": "likert-5",
+      "dimension": "recoveryCapacity",
+      "reverse": true,
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 5 },
+        { "id": "B", "text": "不同意", "value": 4 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 2 },
+        { "id": "E", "text": "非常同意", "value": 1 }
+      ]
+    },
+    {
+      "id": "stress-q12",
+      "text": "我觉得自己无法应对生活中的各种挑战",
+      "type": "likert-5",
+      "dimension": "stressLoad",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    }
+  ]
+}

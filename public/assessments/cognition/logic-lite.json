@@ -1,0 +1,203 @@
+{
+  "id": "logic-lite",
+  "slug": "logic-lite",
+  "name": "逻辑思维评估",
+  "category": "cognition",
+  "description": "评估您在模式识别、顺序推理、抽象逻辑三个认知维度上的能力，帮助您了解自己的思维风格与认知优势。",
+  "shortDescription": "测试您的逻辑思维与推理能力",
+  "version": "1.0.0",
+  "author": "Humanity Team",
+  "language": "zh-CN",
+  "estimatedMinutes": 15,
+  "questionCount": 10,
+  "difficulty": "medium",
+  "tags": ["逻辑", "推理", "认知", "思维", "智力"],
+  "dimensions": [
+    {
+      "id": "patternRecognition",
+      "name": "模式识别",
+      "description": "识别数字、图形或语言中的规律模式"
+    },
+    {
+      "id": "sequentialReasoning",
+      "name": "顺序推理",
+      "description": "理解事件之间的因果关系和时间顺序"
+    },
+    {
+      "id": "abstractLogic",
+      "name": "抽象逻辑",
+      "description": "处理非具体概念，进行假设验证和逻辑推导"
+    }
+  ],
+  "scoring": {
+    "type": "sum",
+    "dimensionScores": {
+      "patternRecognition": { "weights": { "correct": 1 } },
+      "sequentialReasoning": { "weights": { "correct": 1 } },
+      "abstractLogic": { "weights": { "correct": 1 } }
+    },
+    "normalize": false,
+    "minScore": 0,
+    "maxScore": 10
+  },
+  "resultProfiles": [
+    {
+      "id": "excellent",
+      "name": "优秀",
+      "description": "您的逻辑思维能力非常出色，在模式识别、顺序推理和抽象逻辑方面都表现优异。",
+      "conditions": [
+        { "dimension": "total", "operator": "gte", "value": 8 }
+      ],
+      "tags": ["优秀", "逻辑强", "思维敏捷"]
+    },
+    {
+      "id": "good",
+      "name": "良好",
+      "description": "您的逻辑思维能力良好，能够较好地处理分析性任务，在某些维度上有突出表现。",
+      "conditions": [
+        { "dimension": "total", "operator": "between", "value": [6, 7] }
+      ],
+      "tags": ["良好", "分析力强"]
+    },
+    {
+      "id": "average",
+      "name": "中等",
+      "description": "您的逻辑思维能力处于平均水平，具有进一步提升的潜力。",
+      "conditions": [
+        { "dimension": "total", "operator": "between", "value": [4, 5] }
+      ],
+      "tags": ["中等", "有潜力"]
+    },
+    {
+      "id": "developing",
+      "name": "发展中",
+      "description": "您可能在逻辑思维的某些维度上需要更多练习，但通过持续训练可以有效提升。",
+      "conditions": [
+        { "dimension": "total", "operator": "lt", "value": 4 }
+      ],
+      "tags": ["发展中", "需练习"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "logic-q1",
+      "text": "找规律：2, 4, 8, 16, ? 下一个数字是什么？",
+      "type": "single-choice",
+      "dimension": "patternRecognition",
+      "options": [
+        { "id": "A", "text": "20", "value": 0 },
+        { "id": "B", "text": "24", "value": 0 },
+        { "id": "C", "text": "32", "value": 1 },
+        { "id": "D", "text": "64", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q2",
+      "text": "找规律：1, 1, 2, 3, 5, 8, ? 下一个数字是什么？",
+      "type": "single-choice",
+      "dimension": "patternRecognition",
+      "options": [
+        { "id": "A", "text": "11", "value": 0 },
+        { "id": "B", "text": "12", "value": 0 },
+        { "id": "C", "text": "13", "value": 1 },
+        { "id": "D", "text": "15", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q3",
+      "text": "如果所有 A 都是 B，有些 B 是 C，那么以下哪个结论一定正确？",
+      "type": "single-choice",
+      "dimension": "abstractLogic",
+      "options": [
+        { "id": "A", "text": "所有 A 都是 C", "value": 0 },
+        { "id": "B", "text": "有些 A 可能是 C", "value": 1 },
+        { "id": "C", "text": "没有 A 是 C", "value": 0 },
+        { "id": "D", "text": "所有 C 都是 A", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q4",
+      "text": "小明比小红年龄大，小红比小华年龄大。请问谁年龄最小？",
+      "type": "single-choice",
+      "dimension": "sequentialReasoning",
+      "options": [
+        { "id": "A", "text": "小明", "value": 0 },
+        { "id": "B", "text": "小红", "value": 0 },
+        { "id": "C", "text": "小华", "value": 1 },
+        { "id": "D", "text": "无法确定", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q5",
+      "text": "找规律：AZ, BY, CX, DW, ? 下一个是什么？",
+      "type": "single-choice",
+      "dimension": "patternRecognition",
+      "options": [
+        { "id": "A", "text": "EV", "value": 1 },
+        { "id": "B", "text": "FU", "value": 0 },
+        { "id": "C", "text": "EU", "value": 0 },
+        { "id": "D", "text": "FV", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q6",
+      "text": "如果明天下雨，我就不去跑步。如果我不去跑步，我就会在家看书。如果我在家看书，我就会增长知识。请问明天下雨会导致什么？",
+      "type": "single-choice",
+      "dimension": "sequentialReasoning",
+      "options": [
+        { "id": "A", "text": "我增长知识", "value": 1 },
+        { "id": "B", "text": "我出门", "value": 0 },
+        { "id": "C", "text": "我去跑步", "value": 0 },
+        { "id": "D", "text": "天气晴朗", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q7",
+      "text": "一个数字，它的三分之一加五是十二，这个数字是多少？",
+      "type": "single-choice",
+      "dimension": "abstractLogic",
+      "options": [
+        { "id": "A", "text": "18", "value": 0 },
+        { "id": "B", "text": "21", "value": 1 },
+        { "id": "C", "text": "24", "value": 0 },
+        { "id": "D", "text": "27", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q8",
+      "text": "找规律：3, 6, 11, 18, 27, ? 下一个数字是什么？",
+      "type": "single-choice",
+      "dimension": "patternRecognition",
+      "options": [
+        { "id": "A", "text": "36", "value": 0 },
+        { "id": "B", "text": "38", "value": 1 },
+        { "id": "C", "text": "40", "value": 0 },
+        { "id": "D", "text": "42", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q9",
+      "text": "如果一个三角形每条边长度都是整数，且周长是 10，那么它的面积最大可能是多少？（提示：使用海伦公式）",
+      "type": "single-choice",
+      "dimension": "abstractLogic",
+      "options": [
+        { "id": "A", "text": "约 4.9", "value": 0 },
+        { "id": "B", "text": "约 6.0", "value": 1 },
+        { "id": "C", "text": "约 8.5", "value": 0 },
+        { "id": "D", "text": "约 10.2", "value": 0 }
+      ]
+    },
+    {
+      "id": "logic-q10",
+      "text": "小张、小李、小王三人赛跑。小张不是最快的，小李不是最慢的。请问谁跑第一名？",
+      "type": "single-choice",
+      "dimension": "sequentialReasoning",
+      "options": [
+        { "id": "A", "text": "小张", "value": 0 },
+        { "id": "B", "text": "小李", "value": 1 },
+        { "id": "C", "text": "小王", "value": 0 },
+        { "id": "D", "text": "无法确定", "value": 0 }
+      ]
+    }
+  ]
+}

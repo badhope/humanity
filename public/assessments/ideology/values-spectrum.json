@@ -1,0 +1,249 @@
+{
+  "id": "values-spectrum",
+  "slug": "values-spectrum",
+  "name": "价值观光谱",
+  "category": "ideology",
+  "description": "探索您在传统与变革、权威与自由、个人与集体、务实与理想四个价值维度上的倾向，帮助您更清晰地认识自己的内在价值取向。",
+  "shortDescription": "发现您的核心价值取向",
+  "version": "1.0.0",
+  "author": "Humanity Team",
+  "language": "zh-CN",
+  "estimatedMinutes": 10,
+  "questionCount": 12,
+  "difficulty": "easy",
+  "tags": ["价值观", "人生观", "信念", "自我认知"],
+  "dimensions": [
+    {
+      "id": "traditionChange",
+      "name": "传统与变革",
+      "description": "您对传统价值观和变革创新的态度倾向"
+    },
+    {
+      "id": "authorityLiberty",
+      "name": "权威与自由",
+      "description": "您对秩序权威和个人自由的看重程度"
+    },
+    {
+      "id": "individualCollective",
+      "name": "个人与集体",
+      "description": "您更看重个人发展还是集体利益"
+    },
+    {
+      "id": "pragmatismIdealism",
+      "name": "务实与理想",
+      "description": "您倾向于务实解决问题还是追求理想目标"
+    }
+  ],
+  "scoring": {
+    "type": "weighted",
+    "dimensionScores": {
+      "traditionChange": { "weights": { "tradition": -2, "moderate_tradition": -1, "balanced": 0, "moderate_change": 1, "change": 2 } },
+      "authorityLiberty": { "weights": { "authority": -2, "moderate_authority": -1, "balanced": 0, "moderate_liberty": 1, "liberty": 2 } },
+      "individualCollective": { "weights": { "individual": 2, "moderate_individual": 1, "balanced": 0, "moderate_collective": -1, "collective": -2 } },
+      "pragmatismIdealism": { "weights": { "pragmatic": -2, "moderate_pragmatic": -1, "balanced": 0, "moderate_idealism": 1, "idealism": 2 } }
+    },
+    "normalize": true,
+    "minScore": -24,
+    "maxScore": 24
+  },
+  "resultProfiles": [
+    {
+      "id": "conservative-authority",
+      "name": "传统权威型",
+      "description": "您倾向于尊重传统和权威，重视社会稳定和秩序。",
+      "conditions": [
+        { "dimension": "traditionChange", "operator": "lte", "value": -1 },
+        { "dimension": "authorityLiberty", "operator": "lte", "value": -1 }
+      ],
+      "tags": ["传统", "权威", "稳定"]
+    },
+    {
+      "id": "progressive-libertarian",
+      "name": "进步自由型",
+      "description": "您支持变革和个人自由，倾向于打破传统束缚。",
+      "conditions": [
+        { "dimension": "traditionChange", "operator": "gte", "value": 1 },
+        { "dimension": "authorityLiberty", "operator": "gte", "value": 1 }
+      ],
+      "tags": ["进步", "自由", "创新"]
+    },
+    {
+      "id": "balanced-centrist",
+      "name": "均衡中庸型",
+      "description": "您在各维度上保持平衡，既重视传统也开放变革，既看重个人也尊重集体。",
+      "conditions": [
+        { "dimension": "traditionChange", "operator": "between", "value": [-1, 1] },
+        { "dimension": "authorityLiberty", "operator": "between", "value": [-1, 1] }
+      ],
+      "tags": ["平衡", "中庸", "务实"]
+    },
+    {
+      "id": "individualist-pragmatist",
+      "name": "个人务实型",
+      "description": "您更注重个人发展和实际效果，做事讲究效率。",
+      "conditions": [
+        { "dimension": "individualCollective", "operator": "gte", "value": 1 },
+        { "dimension": "pragmatismIdealism", "operator": "lte", "value": -1 }
+      ],
+      "tags": ["个人", "务实", "效率"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "values-q1",
+      "text": "我认为传统节日和习俗应该得到很好的保留和传承",
+      "type": "likert-5",
+      "dimension": "traditionChange",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 2 },
+        { "id": "B", "text": "不同意", "value": 1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": -1 },
+        { "id": "E", "text": "非常同意", "value": -2 }
+      ]
+    },
+    {
+      "id": "values-q2",
+      "text": "社会进步需要打破一些旧的规则和观念",
+      "type": "likert-5",
+      "dimension": "traditionChange",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": -2 },
+        { "id": "B", "text": "不同意", "value": -1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": 1 },
+        { "id": "E", "text": "非常同意", "value": 2 }
+      ]
+    },
+    {
+      "id": "values-q3",
+      "text": "在团队中，等级制度和明确的分工是必要的",
+      "type": "likert-5",
+      "dimension": "authorityLiberty",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 2 },
+        { "id": "B", "text": "不同意", "value": 1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": -1 },
+        { "id": "E", "text": "非常同意", "value": -2 }
+      ]
+    },
+    {
+      "id": "values-q4",
+      "text": "个人应该有权选择自己的生活方式，不受传统约束",
+      "type": "likert-5",
+      "dimension": "authorityLiberty",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": -2 },
+        { "id": "B", "text": "不同意", "value": -1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": 1 },
+        { "id": "E", "text": "非常同意", "value": 2 }
+      ]
+    },
+    {
+      "id": "values-q5",
+      "text": "个人的成功应该基于对社会的贡献来衡量",
+      "type": "likert-5",
+      "dimension": "individualCollective",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 2 },
+        { "id": "B", "text": "不同意", "value": 1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": -1 },
+        { "id": "E", "text": "非常同意", "value": -2 }
+      ]
+    },
+    {
+      "id": "values-q6",
+      "text": "我更看重自己的成长和发展机会",
+      "type": "likert-5",
+      "dimension": "individualCollective",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": -2 },
+        { "id": "B", "text": "不同意", "value": -1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": 1 },
+        { "id": "E", "text": "非常同意", "value": 2 }
+      ]
+    },
+    {
+      "id": "values-q7",
+      "text": "做决策时，我会优先考虑实际情况和可行性",
+      "type": "likert-5",
+      "dimension": "pragmatismIdealism",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": -2 },
+        { "id": "B", "text": "不同意", "value": -1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": 1 },
+        { "id": "E", "text": "非常同意", "value": 2 }
+      ]
+    },
+    {
+      "id": "values-q8",
+      "text": "我相信通过努力可以实现看似不可能的理想",
+      "type": "likert-5",
+      "dimension": "pragmatismIdealism",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 2 },
+        { "id": "B", "text": "不同意", "value": 1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": -1 },
+        { "id": "E", "text": "非常同意", "value": -2 }
+      ]
+    },
+    {
+      "id": "values-q9",
+      "text": "我认为年轻人应该尊重长辈的经验和智慧",
+      "type": "likert-5",
+      "dimension": "traditionChange",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 2 },
+        { "id": "B", "text": "不同意", "value": 1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": -1 },
+        { "id": "E", "text": "非常同意", "value": -2 }
+      ]
+    },
+    {
+      "id": "values-q10",
+      "text": "规则的制定应该考虑大多数人的意见",
+      "type": "likert-5",
+      "dimension": "authorityLiberty",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": -2 },
+        { "id": "B", "text": "不同意", "value": -1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": 1 },
+        { "id": "E", "text": "非常同意", "value": 2 }
+      ]
+    },
+    {
+      "id": "values-q11",
+      "text": "集体利益应该优先于个人利益",
+      "type": "likert-5",
+      "dimension": "individualCollective",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 2 },
+        { "id": "B", "text": "不同意", "value": 1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": -1 },
+        { "id": "E", "text": "非常同意", "value": -2 }
+      ]
+    },
+    {
+      "id": "values-q12",
+      "text": "比起远大的理想，我更看重眼前能实现的目标",
+      "type": "likert-5",
+      "dimension": "pragmatismIdealism",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": -2 },
+        { "id": "B", "text": "不同意", "value": -1 },
+        { "id": "C", "text": "一般", "value": 0 },
+        { "id": "D", "text": "同意", "value": 1 },
+        { "id": "E", "text": "非常同意", "value": 2 }
+      ]
+    }
+  ]
+}

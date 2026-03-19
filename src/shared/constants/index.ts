@@ -11,8 +11,8 @@ export const ASSESSMENT_CATEGORIES = {
     description: '了解你的情绪、压力与心理状态',
     icon: 'Brain',
   },
-  cognitive: {
-    id: 'cognitive',
+  cognition: {
+    id: 'cognition',
     name: '认知能力',
     description: '测试你的智力、记忆与思维能力',
     icon: 'Lightbulb',
@@ -48,13 +48,4 @@ export const ANIMATION_CONFIG = {
     duration: 0.8,
     stagger: 0.15,
   },
-} as const;
-
-export const ROUTES = {
-  HOME: '/',
-  CATEGORIES: '/categories',
-  ASSESSMENTS: '/assessments/:category',
-  QUIZ: '/quiz/:assessmentId',
-  RESULTS: '/results/:assessmentId',
-  PROFILE: '/profile',
-} as const;
+};

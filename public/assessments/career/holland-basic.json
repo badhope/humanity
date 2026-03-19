@@ -1,0 +1,354 @@
+{
+  "id": "holland-basic",
+  "slug": "holland-basic",
+  "name": "霍兰德职业兴趣测试",
+  "category": "career",
+  "description": "基于 John Holland 的职业兴趣理论，评估您在现实型、研究型、艺术型、社会型、企业型、常规型六个维度上的倾向，帮助您找到最适合的职业方向。",
+  "shortDescription": "找到您的职业兴趣类型",
+  "version": "1.0.0",
+  "author": "Humanity Team",
+  "language": "zh-CN",
+  "estimatedMinutes": 12,
+  "questionCount": 18,
+  "difficulty": "medium",
+  "tags": ["职业", "兴趣", "霍兰德", "生涯规划", "职业发展"],
+  "dimensions": [
+    {
+      "id": "R",
+      "name": "现实型 (Realistic)",
+      "description": "偏好与物体、工具、机械等具体事物打交道，喜欢动手操作"
+    },
+    {
+      "id": "I",
+      "name": "研究型 (Investigative)",
+      "description": "偏好需要思考、分析和研究问题的活动，喜欢探索未知"
+    },
+    {
+      "id": "A",
+      "name": "艺术型 (Artistic)",
+      "description": "偏好需要创意和自我表达的活动，喜欢自由创作"
+    },
+    {
+      "id": "S",
+      "name": "社会型 (Social)",
+      "description": "偏好帮助和服务他人的活动，喜欢与人交流"
+    },
+    {
+      "id": "E",
+      "name": "企业型 (Enterprising)",
+      "description": "偏好影响和领导他人的活动，喜欢说服和领导"
+    },
+    {
+      "id": "C",
+      "name": "常规型 (Conventional)",
+      "description": "偏好规整、有序的数据和文书工作，喜欢按计划执行"
+    }
+  ],
+  "scoring": {
+    "type": "weighted",
+    "dimensionScores": {
+      "R": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "I": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "A": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "S": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "E": { "weights": { "high": 3, "medium": 2, "low": 1 } },
+      "C": { "weights": { "high": 3, "medium": 2, "low": 1 } }
+    },
+    "normalize": false,
+    "minScore": 18,
+    "maxScore": 90
+  },
+  "resultProfiles": [
+    {
+      "id": "RI",
+      "name": "研究型现实型",
+      "description": "您喜欢探索事物运作的原理，善于分析和解决技术问题。",
+      "conditions": [
+        { "dimension": "R", "operator": "gt", "value": 8 },
+        { "dimension": "I", "operator": "gt", "value": 8 }
+      ],
+      "tags": ["分析", "技术", "独立"],
+      "careers": ["工程师", "机械师", "技术支持", "地质勘测"]
+    },
+    {
+      "id": "AS",
+      "name": "艺术社会型",
+      "description": "您富有创造力并善于与人交流，喜欢通过艺术方式帮助他人。",
+      "conditions": [
+        { "dimension": "A", "operator": "gt", "value": 8 },
+        { "dimension": "S", "operator": "gt", "value": 8 }
+      ],
+      "tags": ["创意", "表达", "助人"],
+      "careers": ["心理咨询师", "艺术治疗师", "策展人", "教师"]
+    },
+    {
+      "id": "EC",
+      "name": "企业常规型",
+      "description": "您善于组织管理，喜欢在结构化环境中影响和领导他人。",
+      "conditions": [
+        { "dimension": "E", "operator": "gt", "value": 8 },
+        { "dimension": "C", "operator": "gt", "value": 8 }
+      ],
+      "tags": ["管理", "组织", "执行"],
+      "careers": ["项目经理", "行政主管", "人力资源经理", "银行职员"]
+    },
+    {
+      "id": "IS",
+      "name": "研究社会型",
+      "description": "您既善于深度思考，又乐于助人，喜欢通过知识服务他人。",
+      "conditions": [
+        { "dimension": "I", "operator": "gt", "value": 8 },
+        { "dimension": "S", "operator": "gt", "value": 8 }
+      ],
+      "tags": ["知识", "助人", "智慧"],
+      "careers": ["医生", "研究员", "大学教授", "法律顾问"]
+    },
+    {
+      "id": "AE",
+      "name": "艺术企业型",
+      "description": "您富有创意并具有影响力，喜欢通过艺术方式感染和说服他人。",
+      "conditions": [
+        { "dimension": "A", "operator": "gt", "value": 8 },
+        { "dimension": "E", "operator": "gt", "value": 8 }
+      ],
+      "tags": ["创意", "影响", "表达"],
+      "careers": ["广告创意", "媒体策划", "公关专家", "设计师"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "holland-q1",
+      "text": "我喜欢使用工具制作或修理东西",
+      "type": "likert-5",
+      "dimension": "R",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q2",
+      "text": "我喜欢研究事物是如何运作的",
+      "type": "likert-5",
+      "dimension": "I",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q3",
+      "text": "我喜欢绘画、写作或设计创作",
+      "type": "likert-5",
+      "dimension": "A",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q4",
+      "text": "我喜欢帮助他人解决问题或提供建议",
+      "type": "likert-5",
+      "dimension": "S",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q5",
+      "text": "我喜欢说服或领导他人",
+      "type": "likert-5",
+      "dimension": "E",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q6",
+      "text": "我喜欢按照明确的规则和流程完成任务",
+      "type": "likert-5",
+      "dimension": "C",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q7",
+      "text": "我喜欢户外活动，如徒步、园艺或运动",
+      "type": "likert-5",
+      "dimension": "R",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q8",
+      "text": "我喜欢阅读科普文章或观看科学纪录片",
+      "type": "likert-5",
+      "dimension": "I",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q9",
+      "text": "我喜欢参加艺术活动，如音乐会、画展或戏剧",
+      "type": "likert-5",
+      "dimension": "A",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q10",
+      "text": "我喜欢组织和协调活动，如志愿者项目或社交聚会",
+      "type": "likert-5",
+      "dimension": "S",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q11",
+      "text": "我喜欢参与商业或政治决策",
+      "type": "likert-5",
+      "dimension": "E",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q12",
+      "text": "我喜欢整理数据、制作报表或记录信息",
+      "type": "likert-5",
+      "dimension": "C",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q13",
+      "text": "我喜欢解决需要动手操作的实际问题",
+      "type": "likert-5",
+      "dimension": "R",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q14",
+      "text": "我喜欢进行实验或数据分析",
+      "type": "likert-5",
+      "dimension": "I",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q15",
+      "text": "我喜欢即兴创作，不喜欢被固定形式束缚",
+      "type": "likert-5",
+      "dimension": "A",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q16",
+      "text": "我喜欢倾听他人的烦恼并给予支持",
+      "type": "likert-5",
+      "dimension": "S",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q17",
+      "text": "我喜欢设定目标并激励他人达成",
+      "type": "likert-5",
+      "dimension": "E",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    },
+    {
+      "id": "holland-q18",
+      "text": "我喜欢在有序的环境中高效工作",
+      "type": "likert-5",
+      "dimension": "C",
+      "options": [
+        { "id": "A", "text": "非常不同意", "value": 1 },
+        { "id": "B", "text": "不同意", "value": 2 },
+        { "id": "C", "text": "一般", "value": 3 },
+        { "id": "D", "text": "同意", "value": 4 },
+        { "id": "E", "text": "非常同意", "value": 5 }
+      ]
+    }
+  ]
+}

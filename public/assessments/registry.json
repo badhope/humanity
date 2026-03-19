@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-03-19",
+  "assessments": [
+    {
+      "id": "mbti-basic",
+      "slug": "mbti-basic",
+      "name": "MBTI 职业性格测试",
+      "category": "personality",
+      "description": "基于 Myers-Briggs Type Indicator 理论，帮助您了解自己在能量获取、信息获取、决策方式、生活态度四个维度上的倾向，从而识别您的性格类型。",
+      "shortDescription": "探索您的性格类型与职业匹配",
+      "estimatedMinutes": 10,
+      "questionCount": 12,
+      "difficulty": "easy",
+      "tags": ["人格", "性格", "MBTI", "职业", "自我探索"],
+      "filePath": "/assessments/personality/mbti-basic.json",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "id": "stress-check",
+      "slug": "stress-check",
+      "name": "压力指数评估",
+      "category": "psychology",
+      "description": "通过评估您在压力负荷、情绪波动、恢复能力三个维度上的表现，帮助您了解当前的心理压力状态，并提供科学的调节建议。",
+      "shortDescription": "了解您的压力水平与心理状态",
+      "estimatedMinutes": 8,
+      "questionCount": 12,
+      "difficulty": "easy",
+      "tags": ["压力", "心理健康", "情绪", "压力管理"],
+      "filePath": "/assessments/psychology/stress-check.json",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "id": "logic-lite",
+      "slug": "logic-lite",
+      "name": "逻辑思维评估",
+      "category": "cognition",
+      "description": "评估您在模式识别、顺序推理、抽象逻辑三个认知维度上的能力，帮助您了解自己的思维风格与认知优势。",
+      "shortDescription": "测试您的逻辑思维与推理能力",
+      "estimatedMinutes": 15,
+      "questionCount": 10,
+      "difficulty": "medium",
+      "tags": ["逻辑", "推理", "认知", "思维", "智力"],
+      "filePath": "/assessments/cognition/logic-lite.json",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "id": "values-spectrum",
+      "slug": "values-spectrum",
+      "name": "价值观光谱",
+      "category": "ideology",
+      "description": "探索您在传统与变革、权威与自由、个人与集体、务实与理想四个价值维度上的倾向，帮助您更清晰地认识自己的内在价值取向。",
+      "shortDescription": "发现您的核心价值取向",
+      "estimatedMinutes": 10,
+      "questionCount": 12,
+      "difficulty": "easy",
+      "tags": ["价值观", "人生观", "信念", "自我认知"],
+      "filePath": "/assessments/ideology/values-spectrum.json",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "id": "holland-basic",
+      "slug": "holland-basic",
+      "name": "霍兰德职业兴趣测试",
+      "category": "career",
+      "description": "基于 John Holland 的职业兴趣理论，评估您在现实型、研究型、艺术型、社会型、企业型、常规型六个维度上的倾向，帮助您找到最适合的职业方向。",
+      "shortDescription": "找到您的职业兴趣类型",
+      "estimatedMinutes": 12,
+      "questionCount": 18,
+      "difficulty": "medium",
+      "tags": ["职业", "兴趣", "霍兰德", "生涯规划", "职业发展"],
+      "filePath": "/assessments/career/holland-basic.json",
+      "version": "1.0.0",
+      "status": "active"
+    }
+  ]
+}
