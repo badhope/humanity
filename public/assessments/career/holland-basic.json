@@ -6,7 +6,7 @@
   "description": "基于 John Holland 的职业兴趣理论，评估您在现实型、研究型、艺术型、社会型、企业型、常规型六个维度上的倾向，帮助您找到最适合的职业方向。",
   "shortDescription": "找到您的职业兴趣类型",
   "version": "1.1.0",
-  "author": "Humanity Team",
+  "author": "HumanOS Team",
   "language": "zh-CN",
   "estimatedMinutes": 12,
   "questionCount": 18,
@@ -84,3 +84,4 @@
     {"id": "holland-q18", "text": "我喜欢检查细节，确保一切准确无误", "type": "likert-5", "dimension": "C", "options": [{"id": "A", "text": "非常不同意", "value": 1}, {"id": "B", "text": "不同意", "value": 2}, {"id": "C", "text": "一般", "value": 3}, {"id": "D", "text": "同意", "value": 4}, {"id": "E", "text": "非常同意", "value": 5}]}
   ]
 }
+

@@ -6,7 +6,7 @@
   "description": "通过评估您在压力负荷、情绪波动、恢复能力三个维度上的表现，帮助您了解当前的心理压力状态，并提供科学的调节建议。本量表为自我探索性质，不作为医学诊断依据。",
   "shortDescription": "了解您的压力水平与心理状态",
   "version": "1.1.0",
-  "author": "Humanity Team",
+  "author": "HumanOS Team",
   "language": "zh-CN",
   "estimatedMinutes": 8,
   "questionCount": 15,
@@ -480,3 +480,4 @@
     }
   ]
 }
+

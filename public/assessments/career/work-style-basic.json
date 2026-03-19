@@ -6,7 +6,7 @@
   "description": "工作方式偏好反映您在职业场景中最自然、最舒适的工作状态。本测评帮助您了解自己在自主性、协作性、结构性、探索性、执行力五个维度上的倾向，作为职业发展和工作环境选择的参考。这是倾向性测试，不是能力评估。",
   "shortDescription": "了解您理想的工作方式与环境偏好",
   "version": "1.0.0",
-  "author": "Humanity Team",
+  "author": "HumanOS Team",
   "language": "zh-CN",
   "estimatedMinutes": 8,
   "questionCount": 15,

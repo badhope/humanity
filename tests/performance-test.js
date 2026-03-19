@@ -1,5 +1,5 @@
 /**
- * Humanity 网站性能测试脚本
+ * HumanOS 网站性能测试脚本
  * 使用 Node.js 内置模块和 HTTP 请求模拟并发测试
  *
  * 运行方式:
@@ -142,7 +142,7 @@ function calculateStats() {
 
 async function runLoadTest() {
   console.log('========================================');
-  console.log('     Humanity 网站性能测试报告');
+  console.log('     HumanOS 网站性能测试报告');
   console.log('========================================');
   console.log(`目标地址: ${BASE_URL}`);
   console.log(`并发用户: ${CONCURRENT_USERS}`);

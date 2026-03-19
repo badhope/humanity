@@ -1,4 +1,4 @@
-# Humanity
+# HumanOS
 
 [English](./README.md) | 中文
 
@@ -6,7 +6,7 @@
 
 ## 项目名称
 
-**Humanity** - 自我探索测评平台
+**HumanOS** - 自我探索测评平台
 
 ## 一句话简介
 
@@ -18,7 +18,7 @@
 
 ## 当前产品策略
 
-Humanity 遵循**"单模块优先"**的开发策略：
+HumanOS 遵循**"单模块优先"**的开发策略：
 
 1. **MBTI 是当前主要完整可用模块** - 提供从答题到结果的完整闭环体验
 2. 其他模块正处于内容储备与逐步开放阶段
@@ -98,7 +98,7 @@ Humanity 遵循**"单模块优先"**的开发策略：
 ## 项目结构
 
 ```
-humanity/
+HumanOS/
 ├── public/
 │   └── assessments/              # 测评题库目录
 │       ├── registry.json         # 题库中央注册表

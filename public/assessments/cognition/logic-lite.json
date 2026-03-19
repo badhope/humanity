@@ -6,7 +6,7 @@
   "description": "评估您在模式识别、顺序推理、抽象逻辑三个认知维度上的能力，帮助您了解自己的思维风格与认知优势。",
   "shortDescription": "测试您的逻辑思维与推理能力",
   "version": "1.1.0",
-  "author": "Humanity Team",
+  "author": "HumanOS Team",
   "language": "zh-CN",
   "estimatedMinutes": 15,
   "questionCount": 10,

@@ -11,7 +11,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report' }],
   ],
   use: {
-    baseURL: 'https://badhope.github.io/humanity',
+    baseURL: 'https://badhope.github.io/HumanOS',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },

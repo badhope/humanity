@@ -6,7 +6,7 @@
   "description": "注意力与思维风格反映了您在信息处理过程中的习惯和偏好。本测评帮助您了解自己在持续注意力、切换灵活性、细节敏感度三个维度上的特点，作为认知风格自我探索的参考。请注意，这不是能力测试，结果反映的是您的自然偏好，而非能力高低。",
   "shortDescription": "了解您的注意力特点与思维风格",
   "version": "1.1.0",
-  "author": "Humanity Team",
+  "author": "HumanOS Team",
   "language": "zh-CN",
   "estimatedMinutes": 10,
   "questionCount": 15,

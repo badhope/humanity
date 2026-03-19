@@ -1,5 +1,5 @@
 /**
- * Humanity 网站自动化测试脚本
+ * HumanOS 网站自动化测试脚本
  * 使用 Playwright 进行端到端测试
  *
  * 安装依赖:
@@ -12,15 +12,15 @@
 
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'https://badhope.github.io/humanity';
+const BASE_URL = 'https://badhope.github.io/HumanOS';
 
-test.describe('Humanity 网站全面测试', () => {
+test.describe('HumanOS 网站全面测试', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(BASE_URL);
   });
 
   test.describe('1. 网站名称一致性检查', () => {
-    test('首页标题应为 Humanity 或 HumanOS，且各处一致', async ({ page }) => {
+    test('首页标题应为 HumanOS，且各处一致', async ({ page }) => {
       const title = await page.title();
       console.log('页面标题:', title);
       expect(title).toMatch(/Human/i);

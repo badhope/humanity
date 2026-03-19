@@ -6,7 +6,7 @@
   "description": "基于 Myers-Briggs Type Indicator 理论，帮助您了解自己在能量获取、信息获取、决策方式、生活态度四个维度上的倾向，从而识别您的性格类型。",
   "shortDescription": "探索您的性格类型与职业匹配",
   "version": "1.0.0",
-  "author": "Humanity Team",
+  "author": "HumanOS Team",
   "language": "zh-CN",
   "estimatedMinutes": 25,
   "questionCount": 40,

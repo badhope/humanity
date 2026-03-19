@@ -1,4 +1,4 @@
-# Humanity
+# HumanOS
 
 English | [中文](./README.zh-CN.md)
 
@@ -6,7 +6,7 @@ English | [中文](./README.zh-CN.md)
 
 ## Project Name
 
-**Humanity** - A Self-Discovery Assessment Platform
+**HumanOS** - A Self-Discovery Assessment Platform
 
 ## One-line Introduction
 
@@ -18,7 +18,7 @@ A static web platform for personality, psychological, cognitive, and career asse
 
 ## Current Product Strategy
 
-Humanity follows a **"single-module-first"** development approach:
+HumanOS follows a **"single-module-first"** development approach:
 
 1. **MBTI is the primary fully available module** - provides complete answer-to-result闭环 (closed-loop) experience
 2. Other modules are in content preparation and gradual rollout phase
@@ -232,7 +232,7 @@ Each assessment is a self-contained JSON file containing:
 | Data Type | Storage Method | Key Pattern |
 |-----------|---------------|-------------|
 | Quiz Results | localStorage | `quiz_result_{assessmentId}` |
-| User Settings | Zustand + localStorage | `humanity_settings` |
+| User Settings | Zustand + localStorage | `humanOS_settings` |
 | Answer Drafts | localStorage | `quiz_draft_{assessmentId}` |
 
 ### Data Flow
@@ -279,7 +279,7 @@ Home → Categories → Assessment List → Quiz → Results
 
 ### Key Implementation Details
 
-- **HashRouter**: Required for GitHub Pages subdirectory deployment (`/humanity/`)
+- **HashRouter**: Required for GitHub Pages subdirectory deployment (`/HumanOS/`)
 - **Dynamic Imports**: Question banks loaded at runtime via fetch
 - **Type Safety**: Full TypeScript coverage for assessment types
 - **Responsive**: Tailwind CSS with mobile-first approach
