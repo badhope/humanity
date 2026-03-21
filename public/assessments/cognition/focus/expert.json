@@ -469,7 +469,7 @@
     {
       "id": "deep-focus",
       "name": "深度专注型",
-      "description": "您是深度专注型思维者，擅长长时间集中注意力在一项任务上。您善于进入"心流"状态，能够在专注中享受到高度的成就感。",
+      "description": "您是深度专注型思维者，擅长长时间集中注意力在一项任务上。您善于进入'心流'状态，能够在专注中享受到高度的成就感。",
       "conditions": [
         { "dimension": "sustainedAttention", "operator": "gte", "value": 3.5 },
         { "dimension": "switchingFlexibility", "operator": "lt", "value": 2.5 }

@@ -30,7 +30,16 @@ const COMPLETED_MODULES = [
   'work-style-basic',
 ];
 
-const FAMILY_IDS_WITH_VERSIONS = ['mbti', 'stress-check', 'holland'];
+const FAMILY_IDS_WITH_VERSIONS = [
+  'mbti',
+  'stress-check',
+  'resilience',
+  'logic',
+  'focus',
+  'values',
+  'holland',
+  'work-style',
+];
 
 const AssessmentList: FC = () => {
   const { category } = useParams<{ category: string }>();

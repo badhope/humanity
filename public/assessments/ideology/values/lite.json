@@ -138,7 +138,7 @@
     },
     {
       "id": "val-lite-9",
-      "text": "您对"稳定"的理解是？",
+      "text": "您对'稳定'的理解是？",
       "type": "single-choice",
       "dimension": "traditionChange",
       "options": [

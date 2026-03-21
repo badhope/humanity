@@ -138,7 +138,7 @@ export async function fetchAssessmentDefinition(
   try {
     const cleanPath = filePath.replace(/^\//, '');
     const resolvedPath = resolvePath(cleanPath);
-    const response = await fetch(resolvedPath);
+    const response = await fetchWithRetry(resolvedPath);
     if (!response.ok) {
       throw new Error(`Failed to fetch assessment: ${response.status}`);
     }
@@ -148,6 +148,36 @@ export async function fetchAssessmentDefinition(
     console.error(`Error fetching assessment from ${filePath}:`, error);
     throw error;
   }
+}
+
+async function fetchWithRetry(
+  url: string,
+  retries = 3,
+  retryDelay = 1000
+): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        credentials: 'same-origin',
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      if (attempt === retries) {
+        clearTimeout(timeoutId);
+        throw error;
+      }
+      console.warn(`Fetch attempt ${attempt + 1} failed for ${url}, retrying...`);
+      await new Promise(resolve => setTimeout(resolve, retryDelay));
+    }
+  }
+
+  clearTimeout(timeoutId);
+  throw new Error('Max retries exceeded');
 }
 
 export async function fetchAssessmentBySlug(

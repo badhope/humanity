@@ -50,7 +50,7 @@
       "description": "您在做决策时更依赖理性分析还是直觉感受"
     },
     {
-      "id": "competition Cooperation",
+      "id": "competitionCooperation",
       "name": "竞争与合作",
       "description": "您在人际互动中更倾向于竞争还是合作"
     }
@@ -162,7 +162,7 @@
     },
     {
       "id": "val-exp-9",
-      "text": "您对"稳定"的理解是？",
+      "text": "您对'稳定'的理解是？",
       "type": "single-choice",
       "dimension": "traditionChange",
       "options": [
@@ -272,7 +272,7 @@
     },
     {
       "id": "val-exp-19",
-      "text": "您对"金钱"的态度是？",
+      "text": "您对'金钱'的态度是？",
       "type": "single-choice",
       "dimension": "materialismHumanism",
       "options": [
@@ -305,7 +305,7 @@
     },
     {
       "id": "val-exp-22",
-      "text": "您对"公平"的理解是？",
+      "text": "您对'公平'的理解是？",
       "type": "single-choice",
       "dimension": "individualCollective",
       "options": [
@@ -360,7 +360,7 @@
     },
     {
       "id": "val-exp-27",
-      "text": "您对"忠诚"的理解是？",
+      "text": "您对'忠诚'的理解是？",
       "type": "single-choice",
       "dimension": "traditionChange",
       "options": [
@@ -393,7 +393,7 @@
     },
     {
       "id": "val-exp-30",
-      "text": "您对"幸福"的定义是？",
+      "text": "您对'幸福'的定义是？",
       "type": "single-choice",
       "dimension": "materialismHumanism",
       "options": [
@@ -415,7 +415,7 @@
     },
     {
       "id": "val-exp-32",
-      "text": "您对"休闲时间"的看法是？",
+      "text": "您对'休闲时间'的看法是？",
       "type": "single-choice",
       "dimension": "pragmatismIdealism",
       "options": [
@@ -448,7 +448,7 @@
     },
     {
       "id": "val-exp-35",
-      "text": "您对"遗产"（如文化遗产、传统）的看法是？",
+      "text": "您对'遗产'（如文化遗产、传统）的看法是？",
       "type": "single-choice",
       "dimension": "traditionChange",
       "options": [

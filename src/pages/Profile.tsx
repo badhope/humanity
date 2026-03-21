@@ -58,6 +58,8 @@ const Profile: FC = () => {
     resetSettings,
   } = useSettingsStore();
 
+  const shouldAnimate = animationLevel !== 'none' && !reducedMotion;
+
   const [activeTab, setActiveTab] = useState<TabType>(() => {
     const tab = searchParams.get('tab');
     if (tab && ['overview', 'history', 'drafts', 'settings'].includes(tab)) {
@@ -231,26 +233,50 @@ const Profile: FC = () => {
   }
 
   return (
-    <div className="min-h-screen px-4 py-12">
-      <div className="mx-auto max-w-2xl">
-        <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">
-          个人中心
-        </h1>
+    <div className="relative min-h-screen px-4 py-12">
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white/90 to-purple-50/40 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-purple-950/50" />
+        <motion.div
+          className="absolute left-[5%] top-[20%] h-[350px] w-[350px] rounded-full bg-gradient-to-br from-primary-200/25 to-purple-200/15 blur-[100px] dark:from-primary-900/25 dark:to-purple-900/15"
+          animate={shouldAnimate ? { opacity: [0.4, 0.6, 0.4], scale: [0.95, 1.05, 0.95] } : {}}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute right-[10%] bottom-[30%] h-[300px] w-[300px] rounded-full bg-gradient-to-br from-purple-200/20 to-pink-200/10 blur-[80px] dark:from-purple-900/20 dark:to-pink-900/10"
+          animate={shouldAnimate ? { opacity: [0.3, 0.5, 0.3], scale: [0.9, 1.1, 0.9] } : {}}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        />
+      </div>
 
-        <div className="mb-6 flex gap-2 overflow-x-auto pb-2">
+      <div className="mx-auto max-w-2xl">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3"
+        >
+          <div className="relative">
+            <div className="absolute -inset-2 rounded-xl bg-primary-500/20 blur-md opacity-0" />
+            <User className="relative w-8 h-8 text-primary-500" />
+          </div>
+          个人中心
+        </motion.h1>
+
+        <div className="mb-8 flex gap-2 overflow-x-auto pb-2">
           {tabs.map((tab) => (
-            <button
+            <motion.button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors shrink-0 ${
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all shrink-0 ${
                 activeTab === tab.id
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-gradient-to-r from-primary-500 to-purple-500 text-white shadow-lg shadow-primary-500/25'
+                  : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/80 shadow-sm hover:shadow-md border border-gray-200/50 dark:border-gray-700/50'
               }`}
             >
               {tab.icon}
               {tab.label}
-            </button>
+            </motion.button>
           ))}
         </div>
 

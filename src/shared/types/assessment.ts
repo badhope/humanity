@@ -169,8 +169,11 @@ export interface ResultRecord {
   assessmentId: string;
   assessmentSlug: string;
   assessmentName: string;
+  familyId?: string;
+  familyName?: string;
   category: AssessmentCategory;
   version: string;
+  versionLevel?: VersionLevel;
   startedAt: string;
   completedAt: string;
   durationSpent: number;
@@ -194,7 +197,9 @@ export interface DraftRecord {
   assessmentId: string;
   assessmentSlug: string;
   assessmentName: string;
+  familyId?: string;
   category: AssessmentCategory;
+  versionLevel?: VersionLevel;
   answers: Record<string, number>;
   currentQuestionIndex: number;
   totalQuestions: number;

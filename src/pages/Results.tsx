@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Share2, RefreshCw, CheckCircle, Clock, BarChart3, Sparkles } from 'lucide-react';
+import { ArrowLeft, Share2, RefreshCw, CheckCircle, Clock, BarChart3, Sparkles, FileText } from 'lucide-react';
 import { PageTransition } from '@/components/molecules';
 import { Button, Card, Badge, Progress } from '@/components/atoms';
 import { useSettingsStore } from '@/store/settingsStore';
@@ -306,30 +306,71 @@ const Results: FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8 text-center"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-10 text-center"
           >
+            <div className="relative inline-block mb-6">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-purple-500/20 to-primary-500/20 blur-2xl rounded-full" />
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="relative inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 shadow-xl"
+              >
+                <span className="text-4xl font-bold text-white">{resultData.mbtiType}</span>
+              </motion.div>
+              <motion.div
+                className="absolute -top-2 -right-2"
+                initial={{ scale: 0, rotate: -20 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.5, duration: 0.3 }}
+              >
+                <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center shadow-lg">
+                  <CheckCircle className="w-6 h-6 text-white" />
+                </div>
+              </motion.div>
+            </div>
+
             <Badge variant="success" className="mb-4">
-              <CheckCircle className="w-3 h-3 mr-1" />
-              测评完成
+              <span className="mr-1">✓</span> 测评完成
               {isRestoredFromStorage && ' (已恢复)'}
               {savingResult && ' (保存中...)'}
               {resultId && !savingResult && ` (已保存 #${resultId})`}
             </Badge>
-            <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {resultData.mbtiType}
-            </h1>
-            <p className="text-xl text-primary-500 font-medium mb-2">
+
+            <motion.h1
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mb-2 text-4xl font-bold text-gray-900 dark:text-white"
+            >
               {resultData.typeName}
-            </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-              <span className="flex items-center gap-1">
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-lg text-primary-500 font-medium mb-4"
+            >
+              {resultData.mbtiType} 人格类型
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400"
+            >
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800">
                 <Clock className="w-4 h-4" />
-                {Math.round(resultData.durationSpent / 60)}分钟
-              </span>
-              <span>•</span>
-              <span>{resultData.answerCount} 道题</span>
-            </div>
+                <span>{Math.round(resultData.durationSpent / 60)} 分钟</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800">
+                <FileText className="w-4 h-4" />
+                <span>{resultData.answerCount} 道题</span>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.div

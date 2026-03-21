@@ -150,7 +150,7 @@
     },
     {
       "id": "val-std-9",
-      "text": "您对"稳定"的理解是？",
+      "text": "您对'稳定'的理解是？",
       "type": "single-choice",
       "dimension": "traditionChange",
       "options": [
@@ -260,7 +260,7 @@
     },
     {
       "id": "val-std-19",
-      "text": "您对"金钱"的态度是？",
+      "text": "您对'金钱'的态度是？",
       "type": "single-choice",
       "dimension": "materialismHumanism",
       "options": [
@@ -293,7 +293,7 @@
     },
     {
       "id": "val-std-22",
-      "text": "您对"公平"的理解是？",
+      "text": "您对'公平'的理解是？",
       "type": "single-choice",
       "dimension": "individualCollective",
       "options": [

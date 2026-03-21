@@ -1,0 +1,249 @@
+:root {
+  /* ============================================
+     HUMANDESIGN SYSTEM - VISUAL TOKENS
+     Version: 1.1.0
+     ============================================ */
+
+  /* === SHADOWS === */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --shadow-card: 0 2px 8px -2px rgb(0 0 0 / 0.08), 0 4px 16px -4px rgb(0 0 0 / 0.06);
+  --shadow-card-hover: 0 8px 24px -4px rgb(0 0 0 / 0.12), 0 8px 32px -8px rgb(0 0 0 / 0.08);
+  --shadow-button: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-button-hover: 0 4px 12px -2px rgb(0 0 0 / 0.15);
+  --shadow-glow-primary: 0 0 20px -5px rgb(99 102 241 / 0.4);
+  --shadow-glow-success: 0 0 20px -5px rgb(34 197 94 / 0.4);
+  --shadow-glow-warning: 0 0 20px -5px rgb(234 179 8 / 0.4);
+  --shadow-glow-error: 0 0 20px -5px rgb(239 68 68 / 0.4);
+
+  /* === GLOWS === */
+  --glow-primary: 0 0 20px rgb(99 102 241 / 0.3);
+  --glow-primary-subtle: 0 0 40px rgb(99 102 241 / 0.15);
+  --glow-secondary: 0 0 20px rgb(168 85 247 / 0.3);
+  --glow-success: 0 0 20px rgb(34 197 94 / 0.3);
+  --glow-text: 0 0 30px rgb(255 255 255 / 0.1);
+
+  /* === GRADIENTS === */
+  --gradient-primary: linear-gradient(135deg, rgb(99 102 241) 0%, rgb(139 92 246) 100%);
+  --gradient-primary-hover: linear-gradient(135deg, rgb(79 70 229) 0%, rgb(124 58 237) 100%);
+  --gradient-secondary: linear-gradient(135deg, rgb(168 85 247) 0%, rgb(236 72 153) 100%);
+  --gradient-surface: linear-gradient(180deg, rgb(255 255 255) 0%, rgb(248 250 252) 100%);
+  --gradient-surface-dark: linear-gradient(180deg, rgb(30 41 59) 0%, rgb(15 23 42) 100%);
+  --gradient-card: linear-gradient(135deg, rgb(255 255 255) 0%, rgb(248 250 252) 50%, rgb(241 245 249) 100%);
+  --gradient-card-dark: linear-gradient(135deg, rgb(30 41 59) 0%, rgb(15 23 42) 100%);
+  --gradient-radial: radial-gradient(ellipse at center, rgb(255 255 255) 0%, rgb(241 245 249) 70%);
+  --gradient-radial-primary: radial-gradient(ellipse at center, rgb(99 102 241 / 0.1) 0%, transparent 70%);
+  --gradient-hero: radial-gradient(ellipse at top, rgb(99 102 241 / 0.08) 0%, transparent 50%);
+  --gradient-shimmer: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.4) 50%, transparent 100%);
+  --gradient-border-shimmer: linear-gradient(90deg, transparent 0%, rgb(99 102 241 / 0.5) 50%, transparent 100%);
+  --gradient-glass: linear-gradient(135deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0.05) 100%);
+  --gradient-status-active: linear-gradient(135deg, rgb(34 197 94) 0%, rgb(22 163 74) 100%);
+  --gradient-status-beta: linear-gradient(135deg, rgb(234 179 8) 0%, rgb(202 138 0) 100%);
+  --gradient-status-preparing: linear-gradient(135deg, rgb(59 130 246) 0%, rgb(37 99 235) 100%);
+  --gradient-status-maintenance: linear-gradient(135deg, rgb(249 115 22) 0%, rgb(234 88 12) 100%);
+
+  /* === BORDERS === */
+  --border-default: 1px solid rgb(226 232 240);
+  --border-subtle: 1px solid rgb(241 245 249);
+  --border-light: 1px solid rgb(248 250 252);
+  --border-medium: 1px solid rgb(203 213 225);
+  --border-focus: 2px solid rgb(99 102 241);
+  --border-primary: 1px solid rgb(99 102 241);
+  --border-primary-light: 1px solid rgb(165 180 252);
+  --border-success: 1px solid rgb(34 197 94);
+  --border-warning: 1px solid rgb(234 179 8);
+  --border-error: 1px solid rgb(239 68 68);
+  --border-radius-none: 0;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  --border-radius-2xl: 1.5rem;
+  --border-radius-full: 9999px;
+
+  /* === BACKGROUNDS === */
+  --bg-primary: rgb(99 102 241);
+  --bg-primary-hover: rgb(79 70 229);
+  --bg-secondary: rgb(168 85 247);
+  --bg-success: rgb(34 197 94);
+  --bg-warning: rgb(250 204 21);
+  --bg-error: rgb(239 68 68);
+  --bg-info: rgb(59 130 246);
+  --bg-surface: rgb(255 255 255);
+  --bg-surface-elevated: rgb(248 250 252);
+  --bg-card: rgb(255 255 255);
+  --bg-overlay: rgb(15 23 42 / 0.5);
+  --bg-glass: rgb(255 255 255 / 0.8);
+  --bg-glass-dark: rgb(30 41 59 / 0.8);
+
+  /* === SURFACE STYLES === */
+  --surface-card: {
+    background: var(--gradient-card);
+    border: var(--border-default);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-card);
+  };
+  --surface-card-hover: {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-primary-light);
+  };
+  --surface-glass: {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    border: var(--border-default);
+  };
+  --surface-elevated: {
+    background: var(--bg-surface-elevated);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+  };
+
+  /* === TYPOGRAPHY === */
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* === SPACING === */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 400ms;
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-smooth: cubic-bezier(0.45, 0, 0.15, 1);
+
+  /* === Z-INDEX SCALE === */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-popover: 500;
+  --z-tooltip: 600;
+  --z-toast: 700;
+}
+
+/* Dark mode tokens */
+.dark {
+  --bg-surface: rgb(15 23 42);
+  --bg-surface-elevated: rgb(30 41 59);
+  --bg-card: rgb(30 41 59);
+  --border-default: 1px solid rgb(51 65 85);
+  --border-subtle: 1px solid rgb(30 41 59);
+  --gradient-card: linear-gradient(135deg, rgb(30 41 59) 0%, rgb(15 23 42) 100%);
+  --gradient-surface: linear-gradient(180deg, rgb(15 23 42) 0%, rgb(15 23 42) 100%);
+  --shadow-card: 0 2px 8px -2px rgb(0 0 0 / 0.3), 0 4px 16px -4px rgb(0 0 0 / 0.2);
+  --shadow-card-hover: 0 8px 24px -4px rgb(0 0 0 / 0.4), 0 8px 32px -8px rgb(0 0 0 / 0.3);
+}
+
+/* ============================================
+   MOTION TOKENS
+   ============================================ */
+
+:root {
+  /* Durations */
+  --duration-instant: 50ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* Easings */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+  /* Transform origins */
+  --origin-center: center;
+  --origin-top: top;
+  --origin-bottom: bottom;
+  --origin-left: left;
+  --origin-right: right;
+  --origin-top-left: top left;
+  --origin-top-right: top right;
+  --origin-bottom-left: bottom left;
+  --origin-bottom-right: bottom right;
+}
+
+/* ============================================
+   COMPONENT-SPECIFIC TOKENS
+   ============================================ */
+
+/* Button states */
+:root {
+  --button-height-sm: 2rem;
+  --button-height-md: 2.5rem;
+  --button-height-lg: 3rem;
+  --button-padding-sm: 0.5rem 0.75rem;
+  --button-padding-md: 0.75rem 1rem;
+  --button-padding-lg: 1rem 1.5rem;
+  --button-radius: 0.5rem;
+  --button-radius-lg: 0.75rem;
+}
+
+/* Card tokens */
+:root {
+  --card-radius: 0.75rem;
+  --card-radius-lg: 1rem;
+  --card-padding: 1.5rem;
+  --card-padding-lg: 2rem;
+}
+
+/* Badge tokens */
+:root {
+  --badge-radius-full: 9999px;
+  --badge-padding-x: 0.5rem;
+  --badge-padding-y: 0.125rem;
+  --badge-font-size: 0.75rem;
+  --badge-font-weight: 500;
+}
+
+/* Input tokens */
+:root {
+  --input-height: 2.5rem;
+  --input-padding: 0.75rem 1rem;
+  --input-radius: 0.5rem;
+  --input-border-width: 1px;
+}
+
+/* Focus ring */
+:root {
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: rgb(99 102 241 / 0.5);
+  --focus-ring: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  --focus-ring-offset-shadow: 0 0 0 var(--focus-ring-offset) var(--focus-ring-color);
+}

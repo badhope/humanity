@@ -1,4 +1,4 @@
-# Developer Guide
+# HumanOS Developer Guide
 
 ## Getting Started
 
@@ -10,317 +10,324 @@
 ### Setup
 
 ```bash
-# Clone repository
-git clone https://github.com/your-username/HumanOS.git
-cd HumanOS
-
-# Install dependencies
 npm install
+```
 
-# Start development server
+### Development
+
+```bash
 npm run dev
+```
 
-# Build for production
+The app will be available at `http://localhost:5173`.
+
+### Build
+
+```bash
 npm run build
 ```
 
-### Project Structure Overview
+### Type Checking
+
+```bash
+npm run typecheck
+```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+### Content Validation
+
+```bash
+npm run validate
+```
+
+### Validate and Build
+
+```bash
+npm run validate:build
+```
+
+## Project Structure
 
 ```
-HumanOS/
+HumanOS-1/
 ├── public/
-│   └── assessments/           # JSON question banks
+│   └── assessments/          # Assessment content JSON files
+│       ├── registry.json       # Assessment registry
+│       ├── family-registry.json # Family registry
+│       └── module-registry.json # Module registry
 ├── src/
 │   ├── components/            # React components
-│   │   ├── atoms/            # Button, Card, etc.
-│   │   ├── molecules/        # PageTransition, StatusPageTemplate
-│   │   └── organisms/         # Complex components
-│   ├── pages/                # Route pages
-│   ├── features/             # Feature modules
-│   ├── store/                # Zustand stores
-│   ├── services/             # Business logic
-│   ├── shared/
-│   │   ├── types/            # TypeScript definitions
-│   │   └── utils/            # Utility functions
-│   └── hooks/                # Custom React hooks
+│   │   ├── questions/         # Question renderer components
+│   │   └── blocks/            # Result block components
+│   ├── features/              # Feature modules
+│   │   └── assessment/        # Assessment feature
+│   │       ├── registry.ts    # Registry access
+│   │       ├── contentService.ts # Content loading & validation
+│   │       └── moduleService.ts # Module service
+│   ├── pages/                 # Page components
+│   ├── shared/                # Shared utilities
+│   │   ├── plugins/           # Plugin registries
+│   │   ├── schemas/           # Zod schemas
+│   │   └── types/             # TypeScript types
+│   └── stores/                # State stores
+├── scripts/
+│   └── validate-content.ts    # Content validation script
 └── docs/                     # Documentation
 ```
 
-## Architecture Overview
+## Core Concepts
 
-### Routing
+### 1. Module, Family, Assessment
 
-The app uses React Router v6 with HashRouter for GitHub Pages compatibility.
+HumanOS organizes content in three levels:
 
-Main routes are defined in `src/App.tsx`. See [architecture.md](./architecture.md) for full route list.
+- **Module**: A collection of related assessment families (e.g., "MBTI" module)
+- **Family**: A specific assessment type with multiple versions (e.g., "MBTI" family)
+- **Assessment**: A specific version of a family (e.g., "MBTI Standard v1.0")
 
-### State Management
+### 2. Assessment States
 
-Uses Zustand for state management:
+Each assessment has a status:
 
-- `settingsStore` - User preferences (theme, font size, animations)
-- `quizStore` - Current quiz state (questions, answers, progress)
+- `preparing`: Not accessible, shows coming soon
+- `beta`: Functional but testing, shows beta badge
+- `active`: Fully functional
+- `maintenance`: Temporarily unavailable
+- `deprecated`: No longer supported
 
-### Data Persistence
+### 3. Content Loading
 
-- **IndexedDB (via Dexie)**: Assessment results, profiles, drafts
-- **localStorage**: User settings (theme, font size)
+Always use `contentService` for loading assessment content:
 
-## Adding New Features
+```typescript
+import { loadAssessment } from '@/features/assessment/contentService';
 
-### Adding a New Assessment Family
-
-#### 1. Create Question Bank Files
-
-Create directory: `public/assessments/:category/:family/`
-
-Create `standard.json` (required), plus `lite.json` and `expert.json` (optional but recommended).
-
-Example: `public/assessments/psychology/stress/standard.json`
-
-```json
-{
-  "id": "stress-standard",
-  "slug": "stress-standard",
-  "familyId": "stress-check",
-  "familyName": "压力指数评估",
-  "category": "psychology",
-  "versionLevel": "standard",
-  "dimensions": [...],
-  "questions": [...],
-  "resultProfiles": [...]
-}
+const assessment = await loadAssessment('assessments/personality/mbti/standard.json');
 ```
 
-#### 2. Update Family Registry
+Never directly fetch JSON files from pages.
+
+## Adding a New Assessment
+
+### Step 1: Add Family to Family Registry
 
 Edit `public/assessments/family-registry.json`:
 
 ```json
 {
-  "familyId": "stress-check",
-  "familyName": "压力指数评估",
-  "category": "psychology",
+  "familyId": "my-assessment",
+  "familyName": "我的测评",
   "versions": [
     {
-      "level": "standard",
-      "name": "压力评估 标准版",
-      "questionCount": 20,
-      "recommended": true,
-      "status": "active"
+      "level": "lite",
+      "name": "我的测评简化版",
+      "status": "preparing"
     }
   ]
 }
 ```
 
-#### 3. Add to Category
+### Step 2: Create Assessment JSON File
 
-The assessment will automatically appear in the correct category based on the `category` field.
+Create `public/assessments/{category}/my-assessment/lite.json`:
 
-### Adding a New Page
-
-#### 1. Create Component
-
-Create file in `src/pages/`:
-
-```tsx
-// src/pages/NewPage.tsx
-import { FC } from 'react';
-import { PageTransition } from '@/components/molecules';
-
-const NewPage: FC = () => {
-  return (
-    <PageTransition>
-      <div>
-        {/* Page content */}
-      </div>
-    </PageTransition>
-  );
-};
-
-export default NewPage;
-```
-
-#### 2. Add Route
-
-Edit `src/App.tsx`:
-
-```tsx
-import { lazy } from 'react';
-const NewPage = lazy(() => import('@/pages/NewPage'));
-
-// In Routes:
-<Route path="/new-page" element={<NewPage />} />
-```
-
-### Adding a New UI Component
-
-#### 1. Determine Component Type
-
-- **Atom**: Basic building block (Button, Input, Badge)
-- **Molecule**: Composed of atoms (AssessmentCard, PageTransition)
-- **Organism**: Complex component (ResultsChart, QuizPlayer)
-
-#### 2. Create File
-
-Atoms: `src/components/atoms/NewAtom.tsx`
-Molecules: `src/components/molecules/NewMolecule.tsx`
-
-#### 3. Use Existing Patterns
-
-Check existing components for patterns:
-
-```tsx
-// Atoms follow this pattern
-import { forwardRef } from 'react';
-import { cn } from '@/shared/utils/cn';
-
-interface NewAtomProps {
-  variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg';
+```json
+{
+  "id": "my-assessment-lite",
+  "slug": "my-assessment-lite",
+  "familyId": "my-assessment",
+  "familyName": "我的测评",
+  "category": "personality",
+  "version": "1.0.0",
+  "versionLevel": "lite",
+  "name": "我的测评简化版",
+  "description": "描述...",
+  "estimatedMinutes": 5,
+  "questionCount": 10,
+  "dimensions": [
+    { "id": "dim1", "name": "维度一", "description": "..." }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "text": "问题文本",
+      "type": "single-choice",
+      "options": [
+        { "id": "q1_a", "text": "选项A", "value": 1 },
+        { "id": "q1_b", "text": "选项B", "value": -1 }
+      ],
+      "dimension": "dim1"
+    }
+  ],
+  "scoring": {
+    "type": "weighted",
+    "dimensionScores": {
+      "dim1": { "weights": { "A": 1, "B": -1 } }
+    }
+  },
+  "resultProfiles": [
+    {
+      "id": "result1",
+      "name": "结果一",
+      "description": "结果描述...",
+      "scores": { "dim1": 1 }
+    }
+  ],
+  "status": "preparing"
 }
-
-export const NewAtom = forwardRef<HTMLButtonElement, NewAtomProps>(
-  ({ className, variant = 'primary', ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(
-          'base-classes',
-          variant === 'primary' && 'variant-classes',
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
 ```
 
-### Adding New Question Types
+### Step 3: Add to Assessment Registry
 
-#### 1. Update Types
+Edit `public/assessments/registry.json`:
 
-Edit `src/shared/types/assessment.ts`:
+```json
+{
+  "id": "my-assessment-lite",
+  "filePath": "assessments/personality/my-assessment/lite.json",
+  "status": "preparing",
+  "versionLevel": "lite"
+}
+```
+
+### Step 4: Validate
+
+```bash
+npm run validate
+```
+
+Fix any errors reported.
+
+### Step 5: Activate
+
+When ready, change `status` from `preparing` to `beta` (or `active`) in both files.
+
+## Adding a New Question Type
+
+### Step 1: Create Renderer Component
+
+Create `src/components/questions/MyQuestionRenderer.tsx`:
 
 ```typescript
-export type QuestionType =
-  | 'single-choice'
-  | 'multiple-choice'
-  | 'likert-5'
-  | 'likert-7'
-  | 'ranking'
-  | 'your-new-type';  // Add new type
+import type { QuestionRendererProps } from '@/shared/plugins/questionRendererPlugin';
+
+export function MyQuestionRenderer({ question, value, onChange }: QuestionRendererProps) {
+  return (
+    <div className="my-question">
+      <p>{question.text}</p>
+      {/* Render options */}
+    </div>
+  );
+}
 ```
 
-#### 2. Update Quiz Component
+### Step 2: Register Renderer
 
-Edit the quiz rendering logic in `src/pages/Quiz.tsx` or `src/features/assessment/`.
+Edit `src/shared/plugins/questionRendererPlugin.ts`:
+
+```typescript
+import { MyQuestionRenderer } from '@/components/questions/MyQuestionRenderer';
+
+export function initializeQuestionRenderers() {
+  registerQuestionRenderer('my-type', MyQuestionRenderer);
+}
+```
+
+### Step 3: Use in Content
+
+Now use `"type": "my-type"` in your assessment JSON questions.
+
+## Adding a New Result Block
+
+### Step 1: Create Block Component
+
+Create `src/components/blocks/MyResultBlock.tsx`:
+
+```typescript
+import type { ResultBlockProps } from '@/shared/plugins/resultBlockPlugin';
+
+export function MyResultBlock({ result, profile }: ResultBlockProps) {
+  return (
+    <div className="my-result-block">
+      {/* Render result content */}
+    </div>
+  );
+}
+```
+
+### Step 2: Register Block
+
+Edit `src/shared/plugins/resultBlockPlugin.ts`:
+
+```typescript
+import { MyResultBlock } from '@/components/blocks/MyResultBlock';
+
+export function initializeResultBlocks() {
+  registerResultBlock('my-block', MyResultBlock);
+}
+```
 
 ## Common Tasks
 
-### Modifying Styles
+### Accessing Current Assessment Data
 
-Styles use Tailwind CSS. Check `tailwind.config.js` for custom theme extensions.
+```typescript
+import { useQuizStore } from '@/stores/quizStore';
 
-```tsx
-// Using Tailwind classes
-<div className="bg-primary-500 text-white p-4 rounded-lg">
-  Styled content
-</div>
-
-// Using custom colors
-<div className="bg-brand-primary text-brand-secondary">
-  Branded content
-</div>
+function MyComponent() {
+  const { assessment, answers } = useQuizStore();
+  // Use assessment and answers
+}
 ```
 
-### Adding Animations
+### Navigating to Quiz
 
-Uses Framer Motion for animations:
+```typescript
+import { useNavigate } from 'react-router-dom';
 
-```tsx
-import { motion } from 'framer-motion';
-
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5 }}
->
-  Animated content
-</motion.div>
+const navigate = useNavigate();
+navigate(`/quiz/${slug}`);
 ```
 
-### Using the Status Page Template
+### Checking Assessment Status
 
-For consistent status pages:
+```typescript
+import { getAssessmentStatus } from '@/features/assessment/registry';
 
-```tsx
-import { StatusPageTemplate } from '@/components/molecules/StatusPageTemplate';
-
-<StatusPageTemplate
-  icon={<SomeIcon className="h-10 w-10" />}
-  title="Page Title"
-  description="Description text"
-  statusType="preparing"
-  primaryAction={{
-    label: 'Action Label',
-    onClick: () => { /* action */ },
-  }}
-/>
+const status = await getAssessmentStatus('mbti-standard');
+if (status === 'active') {
+  // Normal flow
+} else if (status === 'beta') {
+  // Show beta badge
+}
 ```
-
-## Testing
-
-```bash
-# Run type checking
-npm run typecheck
-
-# Run linting
-npm run lint
-
-# Build for production
-npm run build
-```
-
-## Deployment
-
-The app deploys to GitHub Pages via GitHub Actions. On push to main branch:
-
-1. `npm run build` creates production build
-2. `dist/` folder is deployed to GitHub Pages
 
 ## Troubleshooting
 
-### Build Errors
+### "Cannot find module" errors
 
-```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
+Run `npm run typecheck` to identify type issues.
 
-### Type Errors
+### Validation errors
 
-Run `npm run typecheck` to see detailed error messages.
+Run `npm run validate` to see content issues.
 
-### Not Seeing Changes
+### Build failures
 
-- Hard refresh the browser (Ctrl+Shift+R)
-- Clear localStorage/IndexedDB if data is cached
+1. Run `npm run lint` to check for linting errors
+2. Run `npm run typecheck` to check for type errors
+3. Check the validation script: `npm run validate`
 
-## Code Style
+## Best Practices
 
-- Use TypeScript for all new code
-- Follow existing component patterns
-- Use Tailwind for styling (no custom CSS unless necessary)
-- Keep components small and focused
-- Document complex logic with comments
-
-## Resources
-
-- [React Documentation](https://react.dev)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Zustand](https://zustand.docs.pmnd.rs)
-- [Dexie](https://dexie.org)
+1. **Always validate content** before committing
+2. **Use contentService** for all content loading
+3. **Follow naming conventions** for files and IDs
+4. **Keep questions focused** on single dimensions
+5. **Test beta assessments** before marking active
+6. **Document new features** in the relevant doc files

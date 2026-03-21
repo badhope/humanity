@@ -2,226 +2,343 @@
 
 ## Overview
 
-HumanOS is a static web application for personality and psychological assessments. It features a JSON-based extensible question bank system, local-first data storage, and a component-based architecture.
+HumanOS is a modular assessment platform designed to host multiple psychological and cognitive assessment modules. The architecture follows a plugin-based design with centralized content management, registry-driven routing, and strict separation between content data and presentation logic.
 
-## Tech Stack
+## Core Architecture Principles
 
-| Category | Technology |
-|----------|------------|
-| Framework | React 18 + TypeScript |
-| Build Tool | Vite 5 |
-| Routing | React Router v6 (HashRouter) |
-| State Management | Zustand |
-| Database | Dexie (IndexedDB wrapper) |
-| Styling | Tailwind CSS |
-| Animations | Framer Motion |
-| Charts | Recharts |
-| Icons | Lucide React |
-| Deployment | GitHub Pages (Static) |
-
-## Project Structure
-
-```
-HumanOS/
-├── public/
-│   ├── assessments/           # JSON question banks
-│   │   ├── family-registry.json
-│   │   ├── personality/
-│   │   │   └── mbti/
-│   │   ├── psychology/
-│   │   │   ├── stress/
-│   │   │   └── resilience/
-│   │   ├── cognition/
-│   │   │   ├── logic/
-│   │   │   └── focus/
-│   │   ├── ideology/
-│   │   │   └── values/
-│   │   └── career/
-│   │       ├── holland/
-│   │       └── work-style/
-│   └── fonts/
-├── src/
-│   ├── components/
-│   │   ├── 3d/                # Three.js components
-│   │   ├── atoms/             # Base UI components
-│   │   ├── molecules/         # Composite components
-│   │   └── organisms/         # Complex components
-│   ├── pages/                 # Route pages
-│   ├── features/              # Feature modules
-│   ├── store/                 # Zustand stores
-│   ├── services/              # Business logic
-│   ├── shared/
-│   │   ├── types/             # TypeScript definitions
-│   │   └── utils/             # Utility functions
-│   ├── hooks/                 # Custom React hooks
-│   └── App.tsx                # Main app with routes
-├── docs/                      # Developer documentation
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
-```
-
-## Routing Architecture
-
-Routes use HashRouter for GitHub Pages compatibility:
-
-| Path | Component | Description |
-|------|-----------|-------------|
-| `#/` | Home | Landing page |
-| `#/categories` | Categories | Assessment categories |
-| `#/assessments/:category` | AssessmentList | Assessments in category |
-| `#/quiz/:assessmentId` | Quiz | Take assessment |
-| `#/results/:assessmentId` | Results | View results |
-| `#/profile` | Profile | User data center |
-| `#/maintenance` | Maintenance | Maintenance status |
-| `#/preparing` | Preparing | Preparing status |
-| `#/empty` | Empty | No content status |
-| `#/error` | ErrorPage | Error status |
-| `#/unavailable` | Unavailable | Unavailable status |
-| `#/*` | NotFound | 404 page |
-
-## State Management
-
-### Settings Store (Zustand)
-
-```typescript
-interface SettingsStore {
-  theme: 'light' | 'dark' | 'system';
-  fontSize: number;
-  animationLevel: 'none' | 'minimal' | 'full';
-  reducedMotion: boolean;
-  setTheme: (theme: Theme) => void;
-  setFontSize: (size: number) => void;
-  setAnimationLevel: (level: AnimationLevel) => void;
-}
-```
-
-### Quiz Store (Zustand)
-
-```typescript
-interface QuizStore {
-  currentAssessment: Assessment | null;
-  questions: Question[];
-  answers: Record<string, string>;
-  currentIndex: number;
-  isComplete: boolean;
-  startQuiz: (assessmentId: string) => Promise<void>;
-  answerQuestion: (questionId: string, value: string) => void;
-  nextQuestion: () => void;
-  prevQuestion: () => void;
-  submitQuiz: () => Promise<void>;
-}
-```
-
-## Data Layer
-
-### IndexedDB Schema (Dexie)
-
-```typescript
-const db = new Dexie('HumanOS');
-db.version(1).stores({
-  profiles: '++id, assessmentId, completedAt',
-  drafts: '++id, assessmentId, updatedAt',
-  settings: 'key',
-});
-```
-
-### Local Storage
-
-- Theme preference
-- Font size
-- Animation level
-- Draft auto-save
+1. **Registry-Driven**: All modules, assessments, and content are registered through centralized registries
+2. **Family/Version System**: Assessments are organized by family (e.g., MBTI) with multiple versions (lite, standard, expert)
+3. **Content/Code Separation**: Content (questions, dimensions, result profiles) lives in JSON files; code handles rendering and logic
+4. **Validation First**: All content is validated before loading; invalid content fails fast with clear errors
 
 ## Module System
 
-### Assessment Loading
+### Plugin Architecture
 
-1. Registry loads `family-registry.json`
-2. Family info displayed on AssessmentList
-3. User selects version (Lite/Standard/Expert)
-4. Quiz page loads specific version JSON
-5. Questions rendered based on type
+The platform uses a plugin-based architecture for extensibility:
 
-### Family Structure
+```
+src/shared/plugins/
+├── questionRendererPlugin.ts    # Plugin registry for question types
+├── resultBlockPlugin.ts         # Plugin registry for result blocks
+└── defaultRenderers.tsx         # Built-in question renderers
+```
+
+#### Question Renderer Plugin
+
+Question renderers handle the display and input of different question types:
+
+```typescript
+// Question type -> Renderer mapping
+'single-choice' -> SingleChoiceRenderer
+'multiple-choice' -> MultipleChoiceRenderer
+'likert-5' -> LikertRenderer
+'likert-7' -> LikertRenderer
+'ranking' -> RankingRenderer
+```
+
+#### Result Block Plugin
+
+Result blocks handle the display of different sections in results:
+
+```typescript
+// Result block types
+'profile' -> ProfileResultBlock
+'ai-report' -> AIReportBlock
+'dimensions' -> DimensionsResultBlock
+'recommendations' -> RecommendationsResultBlock
+```
+
+### Feature Gating
+
+Each assessment module can be in one of three states:
+
+- **active**: Fully functional, accessible to users
+- **beta**: Functional but may have issues; shown with beta badge
+- **preparing**: Not yet functional; shows preparing page
+- **maintenance**: Temporarily unavailable; shows maintenance page
+- **deprecated**: No longer supported; shows unavailable page
+
+## Data Flow
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Registry Layer                        │
+│  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐  │
+│  │   Module    │  │   Family     │  │  Assessment   │  │
+│  │  Registry   │  │   Registry   │  │   Registry    │  │
+│  └─────────────┘  └──────────────┘  └────────────────┘  │
+└─────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│                   Content Service                        │
+│  ┌──────────────────┐  ┌─────────────────────────────┐ │
+│  │ loadAssessment() │  │ validateAssessmentSync()      │ │
+│  │ - fetch JSON     │  │ - validate required fields    │ │
+│  │ - cache result   │  │ - check dimension references  │ │
+│  │ - return typed   │  │ - verify question counts     │ │
+│  └──────────────────┘  └─────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│                    Quiz Flow                             │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌────────┐ │
+│  │  Start  │───▶│ Questions │───▶│ Scoring │───▶│Result │ │
+│  │         │    │          │    │         │    │       │ │
+│  └─────────┘    └─────────┘    └─────────┘    └────────┘ │
+└─────────────────────────────────────────────────────────┘
+```
+
+## Registry Structure
+
+### Module Registry (`public/assessments/module-registry.json`)
 
 ```json
 {
-  "familyId": "mbti",
-  "familyName": "MBTI 职业性格测试",
-  "category": "personality",
-  "versions": [
+  "version": "1.0.0",
+  "modules": [
     {
-      "level": "standard",
-      "name": "MBTI 标准版",
-      "questionCount": 32,
-      "recommended": true,
-      "status": "active"
+      "id": "mbti",
+      "name": "MBTI",
+      "status": "active",
+      "families": ["mbti"]
     }
   ]
 }
 ```
 
-### Version Status
+### Family Registry (`public/assessments/family-registry.json`)
 
-| Status | Meaning | User Experience |
-|--------|---------|------------------|
-| `active` | Fully available | Can take assessment |
-| `preparing` | Being developed | Shows preparing page |
-| `maintenance` | Under maintenance | Shows maintenance page |
+```json
+{
+  "version": "1.0.0",
+  "families": [
+    {
+      "familyId": "mbti",
+      "familyName": "MBTI 职业性格测试",
+      "versions": [
+        { "level": "lite", "status": "active" },
+        { "level": "standard", "status": "active" },
+        { "level": "expert", "status": "beta" }
+      ]
+    }
+  ]
+}
+```
 
-## Component Hierarchy
+### Assessment Registry (`public/assessments/registry.json`)
+
+```json
+{
+  "version": "2.0.0",
+  "assessments": [
+    {
+      "id": "mbti-standard",
+      "filePath": "assessments/personality/mbti/standard.json",
+      "status": "active",
+      "versionLevel": "standard"
+    }
+  ]
+}
+```
+
+## Content Schema
+
+### Assessment Definition
+
+Each assessment JSON file must conform to this structure:
+
+```typescript
+interface AssessmentDefinition {
+  id: string;                    // Unique identifier
+  slug: string;                  // URL-friendly identifier
+  familyId: string;              // Family this belongs to
+  familyName: string;             // Display name of family
+  category: AssessmentCategory;  // personality | psychology | cognition | ideology | career
+  version: string;                // Semantic version
+  versionLevel?: 'lite' | 'standard' | 'expert';
+  name: string;                  // Display name
+  description: string;           // Full description
+  estimatedMinutes: number;      // Estimated completion time
+  questionCount: number;         // Expected question count
+  dimensions: Dimension[];        // Scoring dimensions
+  questions: Question[];         // All questions
+  scoring: ScoringDefinition;     // How to calculate scores
+  resultProfiles: ResultProfile[]; // Possible results
+  status: 'active' | 'beta' | 'deprecated';
+  recommended?: boolean;
+  tags?: string[];
+}
+```
+
+### Question Structure
+
+```typescript
+interface Question {
+  id: string;
+  text: string;
+  type: 'single-choice' | 'multiple-choice' | 'likert-5' | 'likert-7' | 'ranking';
+  options: QuestionOption[];
+  dimension: string;             // References dimension.id
+  reverse?: boolean;             // Reverse scoring
+  weight?: number;               // Question weight
+}
+```
+
+### Dimension Structure
+
+```typescript
+interface Dimension {
+  id: string;
+  name: string;
+  description: string;
+  weights?: Record<string, number>;  // For scoring
+}
+```
+
+### Result Profile
+
+```typescript
+interface ResultProfile {
+  id: string;
+  name: string;
+  description: string;
+  scores?: Record<string, number | string>;   // For range-based results
+  conditions?: Condition[];                     // For condition-based results
+  type?: 'dominant' | 'secondary' | 'balanced' | 'varied';
+  recommendations?: string[];
+  tags?: string[];
+  strengths?: string[];
+  weaknesses?: string[];
+  careers?: string[] | string;
+  relationships?: string;
+  growth?: string;
+}
+```
+
+## Loader Architecture
+
+### Content Service (`src/features/assessment/contentService.ts`)
+
+The content service provides:
+
+1. **loadAssessment(filePath)**: Load and validate an assessment JSON
+2. **loadAssessmentSafe(filePath)**: Safe version returning result type
+3. **validateAssessmentSync(data)**: Validate without loading
+4. **loadFamily(familyId)**: Load family metadata
+
+Features:
+- Automatic caching of loaded assessments
+- Clear error messages with error codes
+- Validation before caching
+
+### Registry Service (`src/features/assessment/registry.ts`)
+
+The registry service provides:
+
+1. **fetchAssessmentRegistry()**: Get all assessments
+2. **fetchFamilyRegistry()**: Get all families
+3. **getAssessmentVersions(familyId)**: Get versions for a family
+4. **getRecommendedVersion(familyId)**: Get recommended version
+
+## State Management
+
+### Quiz Store (`src/stores/quizStore.ts`)
+
+The quiz store manages the assessment flow:
+
+```typescript
+interface QuizState {
+  status: 'idle' | 'loading' | 'ready' | 'in-progress' | 'completed' | 'error';
+  currentQuestionIndex: number;
+  answers: Record<string, number | number[]>;
+  scores?: Record<string, number>;
+  resultProfileId?: string;
+  error?: string;
+}
+```
+
+## Routing
+
+### Assessment Routes
 
 ```
-App
-├── ImmersiveBackground (3D)
-└── Routes
-    ├── Home
-    ├── Categories
-    ├── AssessmentList
-    │   └── AssessmentCard
-    ├── Quiz
-    │   ├── Question
-    │   └── ProgressBar
-    ├── Results
-    │   ├── RadarChart
-    │   └── DimensionCard
-    ├── Profile
-    └── Status Pages
-        ├── Maintenance
-        ├── Preparing
-        ├── Empty
-        ├── Error
-        └── Unavailable
+/                           # Home page
+/assessment/:slug           # Assessment detail/selector
+/quiz/:slug                 # Quiz taking flow
+/quiz/:slug/intro           # Assessment intro/start
+/quiz/:slug/questions       # Question flow
+/quiz/:slug/loading         # Processing/results
+/quiz/:slug/results         # Results display
+/categories                 # Browse by category
+/status                     # Platform status
 ```
+
+### Status Pages
+
+Based on assessment status, users see different pages:
+
+- **active**: Normal quiz flow
+- **beta**: Normal flow with beta badge
+- **preparing**: PreparingPage with coming soon message
+- **maintenance**: MaintenancePage with maintenance message
+- **deprecated**: UnavailablePage with deprecated message
 
 ## Extension Points
 
-### Adding New Assessment Family
+### Adding a New Question Type
 
-1. Create `public/assessments/:category/:family/lite.json`
-2. Create `standard.json` and `expert.json`
-3. Update `family-registry.json`
-4. Add icon/color to registry entry
+1. Create a renderer component in `src/components/questions/`
+2. Register in `questionRendererPlugin.ts`:
+   ```typescript
+   registerQuestionRenderer('my-type', MyQuestionRenderer);
+   ```
+3. Use in assessment JSON: `{ "type": "my-type", ... }`
 
-### Adding New Question Type
+### Adding a New Result Block
 
-1. Add type to `shared/types/assessment.ts`
-2. Update quiz scoring logic in `features/assessment/`
-3. Add rendering component if needed
+1. Create a block component in `src/components/blocks/`
+2. Register in `resultBlockPlugin.ts`:
+   ```typescript
+   registerResultBlock('my-block', MyResultBlock);
+   ```
+3. Use in result profiles JSON
 
-### Adding New Result Visualization
+### Adding a New Assessment Family
 
-1. Add dimension to assessment JSON
-2. Update Results page component
-3. Add chart component in `components/`
+1. Create family entry in `family-registry.json`
+2. Create assessment files in `public/assessments/{category}/{family}/`
+3. Register assessments in `registry.json`
+4. Add module entry if new module
 
-## Deployment
+## Environment Configuration
 
-The app builds to static files and deploys to GitHub Pages:
-
-```bash
-npm run build  # Creates dist/ folder
+```typescript
+// Vite environment
+import.meta.env.BASE_URL      # Base path for GitHub Pages
+import.meta.env.PROD          # Production mode flag
+import.meta.env.DEV           # Development mode flag
 ```
 
-GitHub Actions workflow handles deployment automatically on push to main branch.
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `src/features/assessment/registry.ts` | Registry data access |
+| `src/features/assessment/contentService.ts` | Content loading & validation |
+| `src/shared/plugins/questionRendererPlugin.ts` | Question renderer registry |
+| `src/shared/plugins/resultBlockPlugin.ts` | Result block registry |
+| `src/stores/quizStore.ts` | Quiz flow state |
+| `scripts/validate-content.ts` | Build-time content validation |
+
+## Future Extensions
+
+Planned architecture enhancements:
+
+1. **Remote Content**: Support loading content from external sources
+2. **Content Versioning**: Built-in version management for content updates
+3. **Analytics Integration**: Track assessment completion and scores
+4. **User Progress**: Persistent user progress across sessions
+5. **Custom Assessments**: User-created assessments with restricted publishing

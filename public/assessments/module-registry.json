@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-03-21",
+  "modules": [
+    {
+      "id": "personality",
+      "name": "人格类型",
+      "slug": "personality",
+      "description": "探索你的性格特质与行为模式，发现你的独特人格类型",
+      "shortDescription": "探索性格特质与行为模式",
+      "icon": "User",
+      "color": "blue",
+      "order": 1,
+      "status": "active"
+    },
+    {
+      "id": "psychology",
+      "name": "心理特质",
+      "slug": "psychology",
+      "description": "了解你的情绪、压力与心理状态，提升心理健康水平",
+      "shortDescription": "了解情绪、压力与心理状态",
+      "icon": "Brain",
+      "color": "purple",
+      "order": 2,
+      "status": "active"
+    },
+    {
+      "id": "cognition",
+      "name": "认知能力",
+      "slug": "cognition",
+      "description": "测试你的智力、记忆与思维能力，了解你的认知优势",
+      "shortDescription": "测试智力、记忆与思维能力",
+      "icon": "Lightbulb",
+      "color": "yellow",
+      "order": 3,
+      "status": "active"
+    },
+    {
+      "id": "ideology",
+      "name": "价值观",
+      "slug": "ideology",
+      "description": "探索你的信念与价值取向，了解你内心真正的追求",
+      "shortDescription": "探索信念与价值取向",
+      "icon": "Compass",
+      "color": "green",
+      "order": 4,
+      "status": "active"
+    },
+    {
+      "id": "career",
+      "name": "职业倾向",
+      "slug": "career",
+      "description": "发现适合你的职业发展方向，找到人生使命",
+      "shortDescription": "发现职业发展方向",
+      "icon": "Briefcase",
+      "color": "orange",
+      "order": 5,
+      "status": "active"
+    }
+  ]
+}
